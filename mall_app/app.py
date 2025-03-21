@@ -40,16 +40,21 @@ def create_app():
     
     app.app_context().push()
 
-    db.init_app(app)
+    """
     login_manager = LoginManager()
     login_manager.init_app(app)
-
 
     @login_manager.user_loader
     def load_users(pid):
         return 
+    """
 
     # import and register all blueprints
+    from mall_app.blueprints.admin.routes import admin
+    from mall_app.blueprints.users.routes import users
+
+    app.register_blueprint(users, url_prefix='/')
+    app.register_blueprint(admin, url_prefix='/admin')
 
     # Pasar la conexión a la base de datos al Blueprint
     app.config['db'] = db
