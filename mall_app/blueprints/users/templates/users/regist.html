@@ -4,7 +4,7 @@
 
 {% block content%}
     <section class="login-section">
-        <form action="" class="login-form regist-form" method="post">
+        <form action="{{url_for('users.regist_admin')}}" class="login-form regist-form" method="post">
             <div class="input-container">
                 <label for="name">Nombre</label>
                 <input type="text" id="name" name="name">

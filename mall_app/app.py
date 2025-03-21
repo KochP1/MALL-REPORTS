@@ -40,14 +40,16 @@ def create_app():
     
     app.app_context().push()
 
-    """
+    
     login_manager = LoginManager()
     login_manager.init_app(app)
 
+    from mall_app.blueprints.users.model import User
+
     @login_manager.user_loader
-    def load_users(pid):
-        return 
-    """
+    def load_users(user_id):
+        return User.get_by_id(db, user_id)
+    
 
     # import and register all blueprints
     from mall_app.blueprints.admin.routes import admin

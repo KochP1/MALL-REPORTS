@@ -1,0 +1,6 @@
+{% extends 'admin.html' %}
+{% block title %} Admin dashboard {% endblock %}
+
+{% block content %}
+    <a href="{{url_for('users.log_out')}}">Cerrar sesión</a>
+{% endblock %}

@@ -99,4 +99,39 @@ body{
     }
 }
 
+/* ADMIN DASHBOARD */
+
+.dashboard-body {
+    border: 0 !important;
+    display: grid !important;
+    grid-template-columns: 1fr 3fr 3fr !important;
+    grid-template-rows: 1fr 3fr 4fr !important;
+    margin: auto !important;
+    min-width: 100vw !important;
+    min-height: 100vh !important;
+    grid-template-areas:
+        "side-bar header header"
+        "side-bar main main"
+        "side-bar main main" !important;
+}
+
+.dashboard-header{
+    grid-area: header;
+    background-color: #324768;
+}
+
+.side-nav{
+    grid-area: side-bar;
+    border: 1px solid #333;
+}
+
+.main-section{
+    grid-area: main;
+    border: 1px solid #333;
+}
+
+
+
+
+
 
