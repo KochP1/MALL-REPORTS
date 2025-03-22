@@ -126,7 +126,14 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 70%;
+    gap: 55%;
+}
+
+.user-options__header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
 }
 
 .user-img__container{
@@ -180,6 +187,36 @@ body{
     display: block !important;
 }
 
+.search-input__form{
+    height: max-content;
+    padding-left: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-input{
+    border-radius: 7px;
+    height: 40px;
+    border: none;
+    box-shadow: 0px 0px 5px 0px #fff;
+}
+
+.btn-search{
+    border: none;
+    outline: none;
+    width: max-content;
+    height: max-content;
+    color: #fff;
+    background-color: transparent;
+}
+
+.search-input:focus{
+    border-color: none;
+    outline: none;
+}
+
 /* END ADMIN HEADER */
 
 
@@ -225,10 +262,103 @@ body{
 /* ADMIN MAIN-SECTION */
 .main-section{
     grid-area: main;
-    border: 1px solid #333;
 }
 
 /* REPORTES */
+
+.opciones-reportes__container{
+    padding-top: 20px;
+    width: 100%;
+    height: max-content;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 50px;
+    border-bottom: 1px solid #333;
+
+}
+
+.nav-options__reportes{
+    margin-right: 10px !important;
+}
+
+.btn-nueva-falla{
+    background-color: #324768 !important;
+    border-color: #324768 !important;
+}
+
+.btn-nueva-falla:hover{
+    background-color: #19263a !important;
+    border-color: #324768 !important;
+}
+
+.btn-nueva-falla:focus{
+    background-color: #324768 !important;
+    border-color: #324768 !important;
+}
+
+.btn-excel{
+    background-color: #1D6F42 !important;
+    border-color: #1D6F42 !important;
+    color: #fff !important;
+}
+
+.btn-excel:hover{
+    border-color: #1D6F42;
+    background-color: #0f4628 !important;
+}
+
+.btn-excel:active{
+    border-color: #1D6F42;
+    background-color: #1D6F42;
+}
+
+.btn-filtrar-falla{
+    background-color: #324768 !important;
+    border-color: #324768 !important;
+}
+
+.btn-fltrar-falla:hover{
+    background-color: #19263a !important;
+    border-color: #324768 !important;
+}
+
+.btn-fltrar-falla:focus{
+    background-color: #324768 !important;
+    border-color: #324768 !important;
+}
+
+.table-reportes{
+    margin-top: 50px;
+}
+
+.btn-del-reporte, .btn-edit-reporte{
+    width: 90%;
+}
+
+.date-input__container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    width: 300px;
+    height: 200px;
+    border-radius: 7px;
+    box-shadow: 0px 0px 6px #333;
+    display: none;
+}
+
+.date-input{
+    border-radius: 7px;
+    border: none;
+    box-shadow: 0px 0px 5px 0px #333;
+}
+
+.date-input, .btn-date{
+    width: 90%;
+    height: 40px;
+}
 
 /* END REPORTES */
 

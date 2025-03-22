@@ -1,5 +1,5 @@
 {% extends 'admin.html' %}
-{% block title %} Admin dashboard {% endblock %}
+{% block title %} Admin dashboard-tiendas {% endblock %}
 
 {% block content %}
 
@@ -8,42 +8,29 @@
             <nav class="nav-reportes">
                 <ul class="nav-list__reportes">
                     <button class="nav-options__reportes btn btn-primary btn-nueva-falla">
-                        <span>Nueva falla</span>
+                        <span>Nueva tienda</span>
                     </button>
 
                     <button class="nav-options__reportes btn btn-primary btn-excel">
                         <span>Migrar a excel</span>
                     </button>
-
-                    <button class="nav-options__reportes btn btn-primary btn-filtrar-falla">
-                        <span>Filtrar fecha</span>
-                    </button>
                 </ul>
             </nav>
 
-            <form action="" method="get" class="date-input__container">
-                <input type="date" placeholder="Filtrado por fecha" class="date-input">
-                <input type="date" placeholder="Filtrado por fecha" class="date-input">
-                <button class="btn btn-primary btn-date">Filtrar por fecha</button>
-            </form>
         </div>
     <table class="table table-striped-columns table-reportes">
         <tr>
             <th>ID</th>
             <th>Tienda</th>
-            <th>Área</th>
-            <th>Tipo</th>
-            <th>Descripción</th>
-            <th>Fecha</th>
+            <th>Nombre del encargado</th>
+            <th>Apellido del encargado</th>
         </tr>
 
         <tr>
             <td>1</td>
             <td>Nike</td>
-            <td>Plomeria</td>
-            <td>Lavamano</td>
-            <td>El lavamano tiene una llave rota, y lleva clausurdo una semana ya</td>
-            <td>2025/22/03</td>
+            <td>Juan</td>
+            <td>Koch</td>
             <td class="td-btn"><button class="btn btn-primary btn-edit-reporte">Editar</button></td>
             <td class="td-btn"><button class="btn btn-danger btn-del-reporte">Eliminar</button></td>
         </tr>

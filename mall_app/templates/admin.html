@@ -21,19 +21,28 @@
             </div>
         </div>
 
-        <div class="user-img__container">
-            <span>{{current_user.nombre[0]}}</span>
-
-            <div class="drop-down-menu">
-                <ul class="user-menu__list">
-                    <li class="user-menu__item">
-                        <a href="{{url_for('users.log_out')}}">Cerrar sesión</a>
-                    </li>
-
-                    <li class="user-menu__item">
-                        <a href="#">Editar imágen</a>
-                    </li>
-                </ul>
+        <div class="user-options__header">
+            <form action="" method="get" class="search-input__form">
+                <input type="search" class="search-input" placeholder="Buscar tienda">
+                <button class="btn-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+    
+            <div class="user-img__container">
+                <span>{{current_user.nombre[0]}}</span>
+    
+                <div class="drop-down-menu">
+                    <ul class="user-menu__list">
+                        <li class="user-menu__item">
+                            <a href="{{url_for('users.log_out')}}">Cerrar sesión</a>
+                        </li>
+    
+                        <li class="user-menu__item">
+                            <a href="#">Editar imágen</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </header>
@@ -55,7 +64,7 @@
             </div>
 
             <div class="option">
-                <a href="#" class="nav-bar__link">
+                <a href="{{url_for('admin.tiendas')}}" class="nav-bar__link">
                     <i class="fa-solid fa-store"></i>
                     <span>Tiendas</span>
                 </a>

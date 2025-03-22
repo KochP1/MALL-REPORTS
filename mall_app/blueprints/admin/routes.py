@@ -8,3 +8,8 @@ bcrypt = Bcrypt()
 @admin.route('/')
 def index():
     return render_template('admin/index.html')
+
+@admin.route('/tiendas', methods = ['GET', 'POST'])
+def tiendas():
+    if request.method == 'GET':
+        return render_template('admin/tiendas.html')
