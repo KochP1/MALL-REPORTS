@@ -8,7 +8,7 @@ body{
     box-sizing: border-box;
 }
 
-/* Inicio de sesión y registro de usuarios */
+/* INICIO DE SESIÓN Y REGISTRO DE USUARIOS */
 
 .login-section{
     width: 100%;
@@ -99,13 +99,15 @@ body{
     }
 }
 
+/* END INICIO DE SESIÓN Y REGISTRO DE USUARIOS */
+
 /* ADMIN DASHBOARD */
 
 .dashboard-body {
     border: 0 !important;
     display: grid !important;
     grid-template-columns: 1fr 3fr 3fr !important;
-    grid-template-rows: 1fr 3fr 4fr !important;
+    grid-template-rows: 1fr 3fr 6fr !important;
     margin: auto !important;
     min-width: 100vw !important;
     min-height: 100vh !important;
@@ -115,20 +117,124 @@ body{
         "side-bar main main" !important;
 }
 
+/* ADMIN HEADER */
+
 .dashboard-header{
     grid-area: header;
     background-color: #324768;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 70%;
 }
 
+.user-img__container{
+    background-color: red;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    position: relative;
+    cursor: pointer;
+}
+
+
+.drop-down-menu{
+    background-color: #fff;
+    color: black;
+    width: 200px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    position: absolute;
+    top: 40px;
+    right: 20px;
+    display: none;
+}
+
+.user-menu__list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user-menu__item{
+    padding-left: 15px;
+}
+
+.user-menu__item a{
+    text-decoration: none;
+    color: black;
+    font-size: 1rem;
+}
+
+.user-menu__item:first-child{
+    border-bottom: 1px solid #333;
+}
+
+.user-img__container:hover .drop-down-menu{
+    display: block !important;
+}
+
+/* END ADMIN HEADER */
+
+
+/* ADMIN SIDE-NAV */
 .side-nav{
     grid-area: side-bar;
-    border: 1px solid #333;
+    background-color: #324768;
 }
 
+.options__container{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-top: 100px;
+}
+
+
+.nav-bar__link{
+    color: #fff;
+    text-decoration: none;
+    font-size: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo__container{
+    padding-top: 20px;
+}
+
+.option, .logo__container{
+    padding-left: 25px;
+}
+
+.option:last-child{
+    margin-top: 250px;
+}
+
+/* END ADMIN SIDE-NAV */
+
+
+/* ADMIN MAIN-SECTION */
 .main-section{
     grid-area: main;
     border: 1px solid #333;
 }
+
+/* REPORTES */
+
+/* END REPORTES */
+
+/* END ADMIN MAIN-SECTION */
+
+/* END ADMIN DASHBOARD */
 
 
 

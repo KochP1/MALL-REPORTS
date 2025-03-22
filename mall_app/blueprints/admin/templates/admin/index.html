@@ -2,5 +2,23 @@
 {% block title %} Admin dashboard {% endblock %}
 
 {% block content %}
-    <a href="{{url_for('users.log_out')}}">Cerrar sesión</a>
+    <table class="table table-striped-columns table-reportes">
+        <tr>
+            <th>ID</th>
+            <th>Tienda</th>
+            <th>Área</th>
+            <th>Tipo</th>
+            <th>Descripción</th>
+            <th>Fecha</th>
+        </tr>
+
+        <tr>
+            <td>1</td>
+            <td>Nike</td>
+            <td>Plomeria</td>
+            <td>Lavamano</td>
+            <td>El lavamano tiene una llave rota, y lleva clausurdo una semana ya</td>
+            <td>2025/22/03</td>
+        </tr>
+    </table>
 {% endblock %}
