@@ -7,7 +7,7 @@
 
             <nav class="nav-reportes">
                 <ul class="nav-list__reportes">
-                    <button class="nav-options__reportes btn btn-primary btn-nueva-falla">
+                    <button class="nav-options__reportes btn btn-primary btn-nueva-falla" data-bs-toggle="modal" data-bs-target="#new-tienda-modal">
                         <span>Nueva tienda</span>
                     </button>
 
@@ -26,13 +26,56 @@
             <th>Apellido del encargado</th>
         </tr>
 
+        {% for record in tiendas %}
         <tr>
-            <td>1</td>
-            <td>Nike</td>
-            <td>Juan</td>
-            <td>Koch</td>
+            <td>{{record.idtiendas}}</td>
+            <td>{{record.nombre_tienda}}</td>
+            <td>{{record.nombre}}</td>
+            <td>{{record.apellido}}</td>
             <td class="td-btn"><button class="btn btn-primary btn-edit-reporte">Editar</button></td>
             <td class="td-btn"><button class="btn btn-danger btn-del-reporte">Eliminar</button></td>
         </tr>
+        {% endfor %}
     </table>
+
+    <div class="modal fade" id="new-tienda-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva Tienda</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{url_for('admin.tiendas')}}" method="post" class="new-tienda__form">
+                    <div class="new-tienda-input__container">
+                        <label for="tienda">Nombre de la tienda</label>
+                        <input type="text" name="tienda" id="tienda">
+                    </div>
+
+                    <div class="new-tienda-input__container">
+                        <label for="tienda">Nombre del encargado</label>
+                        <input type="text" name="nombre" id="nombre-tienda">
+                    </div>
+
+                    <div class="new-tienda-input__container">
+                        <label for="apellido-tienda">Apellido del encargado</label>
+                        <input type="text" name="apellido" id="apellido-tienda">
+                    </div>
+
+                    <div class="new-tienda-input__container">
+                        <label for="email-tienda">Email</label>
+                        <input type="email" name="email" id="email-tienda">
+                    </div>
+
+                    <div class="new-tienda-input__container">
+                        <label for="contraseña-tienda">Contraseña</label>
+                        <input type="password" name="contraseña" id="contraseña-tienda">
+                    </div>
+
+                    <button class="btn btn-primary btn-nueva-tienda">Enviar</button>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
 {% endblock %}

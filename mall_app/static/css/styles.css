@@ -264,7 +264,7 @@ body{
     grid-area: main;
 }
 
-/* REPORTES */
+/* REPORTES Y TIENDAS */
 
 .opciones-reportes__container{
     padding-top: 20px;
@@ -360,7 +360,70 @@ body{
     height: 40px;
 }
 
-/* END REPORTES */
+/* MODAL NUEVA TIENDA */
+
+.new-tienda__form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 15px;
+}
+
+.new-tienda-input__container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 10px;
+}
+
+.new-tienda-input__container input {
+    width: 90%;
+    height: 30px;
+    font-size: 1.2rem;
+    border-radius: 7px;
+    border: 1px solid #333;
+}
+
+.new-tienda-input__container input:focus {
+    outline: none;
+    border: none;
+    box-shadow: 0px 0px 5px 0px #333;
+}
+
+.new-tienda-input__container label {
+    font-size: 1.2rem;
+}
+
+.new-tienda-input__container input, .new-tienda-input__container label {
+    margin-left: 30px;
+}
+
+.btn-nueva-tienda{
+    display: flex;
+    margin: auto;
+    background-color: #324768 !important;
+    border-color: #324768 !important;
+    margin-top: 40px;
+    width: 90%;
+    font-size: 1.2rem;
+}
+
+.btn-nueva-tienda:hover{
+    background-color: #19263a !important;
+    border-color: #324768 !important;
+}
+
+.btn-nueva-tienda:focus{
+    background-color: #324768 !important;
+    border-color: #324768 !important;
+}
+
+/* END MODAL NUEVA TIENDA */
+
+/* END REPORTES Y TIENDAS */
 
 /* END ADMIN MAIN-SECTION */
 
