@@ -54,7 +54,31 @@ def index():
             cur.close()
             return redirect(url_for('admin.index'))
 
-@admin.route('mod_reporte/<int:idreportes>', methods = ['DELETE', 'PUT'])
+@admin.route('/filtrar_reportes', methods = ['POST'])
+def filtrar_reportes():
+    db = current_app.config['db']
+    fecha_inicio = request.form['fecha_inicio']
+    fecha_fin = request.form['fecha_fin' ]
+
+    if not fecha_inicio or not fecha_fin:
+        return "Fechas no proporcionadas", 400
+    
+    try:
+        cur = db.cursor()
+        sql = 'SELECT * FROM reportes WHERE fecha BETWEEN %s AND %s ORDER BY fecha DESC'
+        cur.execute(sql, (fecha_inicio, fecha_fin))
+        reportes = cur.fetchall()
+        insertReportes = []
+        columNamnesReportes = [column[0] for column in cur.description]
+        for record in reportes:
+            insertReportes.append(dict(zip(columNamnesReportes, record)))
+        return render_template('admin/index.html', reportes = insertReportes)
+    except Exception as e:
+        return f"Error en la base de datos: {str(e)}", 500
+    finally:
+        cur.close()
+
+@admin.route('/mod_reporte/<int:idreportes>', methods = ['DELETE'])
 def mod_reporte(idreportes):
     db = current_app.config['db']
     if request.method == 'DELETE':
@@ -69,6 +93,60 @@ def mod_reporte(idreportes):
                 return jsonify({"error": "El reporte no existe."}), 404
             finally:
                 cur.close()
+    
+    if request.method == 'PUT':
+        if idreportes:
+            data = request.get_json()
+            print(data)
+            return redirect(url_for('admin.index'))
+
+@admin.route('/edit_reporte/<int:idreportes>', methods = ['PUT'])
+def edit_reorte(idreportes):
+    db = current_app.config['db']
+    
+    # Validar que existan datos JSON
+    if not request.is_json:
+        return jsonify({"error": "El cuerpo debe ser JSON"}), 400
+    
+    data = request.get_json()
+    
+    # Validar campos obligatorios
+    required_fields = ['area', 'tipo', 'descripcion', 'fecha', 'estado']
+    if not all(field in data for field in required_fields):
+        return jsonify({"error": "Faltan campos requeridos"}), 400
+    
+    try:
+        cur = db.cursor()
+        sql = """
+            UPDATE reportes 
+            SET area = %s, tipo = %s, descripcion = %s, fecha = %s, estado = %s
+            WHERE idreportes = %s
+        """
+        cur.execute(sql, (
+            data['area'],
+            data['tipo'],
+            data['descripcion'],
+            data['fecha'],
+            data['estado'],
+            idreportes
+        ))
+        db.commit()
+        
+        # Retornar éxito
+        return jsonify({
+            "success": True,
+            "message": "Reporte actualizado correctamente",
+            "updated_id": idreportes
+        }), 200
+        
+    except Exception as e:
+        db.rollback()
+        return jsonify({
+            "error": "Error en la base de datos",
+            "details": str(e)
+        }), 500
+    finally:
+        cur.close()
 
 
 @admin.route('/tiendas', methods = ['GET', 'POST'])

@@ -15,7 +15,7 @@
                         <span>Migrar a excel</span>
                     </button>
 
-                    <button class="nav-options__reportes btn btn-primary btn-filtrar-falla">
+                    <button class="nav-options__reportes btn btn-primary btn-filtrar-falla" data-bs-toggle="modal" data-bs-target="#fecha-modal">
                         <span>Filtrar fecha</span>
                     </button>
                 </ul>
@@ -35,17 +35,20 @@
             <th>Tipo</th>
             <th>Descripción</th>
             <th>Fecha</th>
+            <th>Estado</th>
         </tr>
 
         {% for falla in reportes %}
         <tr>
-            <td>{{falla.idreportes}}</td>
-            <td>{{falla.nombre_tienda}}</td>
-            <td>{{falla.area}}</td>
-            <td>{{falla.tipo}}</td>
-            <td>{{falla.descripcion}}</td>
-            <td>{{falla.fecha}}</td>
-            <td class="td-btn"><button id-reportes="{{falla.idreportes}}" class="btn btn-primary btn-edit-reporte">Editar</button></td>
+            <td id="id-{{falla.idreportes}}">{{falla.idreportes}}</td>
+            <td id="tienda-{{falla.idreportes}}">{{falla.nombre_tienda}}</td>
+            <td id="area-{{falla.idreportes}}">{{falla.area}}</td>
+            <td id="tipo-{{falla.idreportes}}">{{falla.tipo}}</td>
+            <td id="descripcion-{{falla.idreportes}}">{{falla.descripcion}}</td>
+            <td id="fecha-{{falla.idreportes}}">{{falla.fecha}}</td>
+            <td id="estado-{{falla.idreportes}}">{{falla.estado}}</td>
+            <td class="td-btn"><button id-reportes="{{falla.idreportes}}" class="btn btn-primary btn-edit-reporte" data-bs-toggle="modal" data-bs-target="#edit-falla__modal" onclick="edit_reporte(this.getAttribute('id-reportes'))">Editar</button></td>
+
             <td class="td-btn"><button class="btn btn-danger btn-del-reporte" id-reportes="{{falla.idreportes}}" onclick="mod_reporte(this.getAttribute('id-reportes'))">Eliminar</button></td>
         </tr>
         {% endfor %}
@@ -107,6 +110,86 @@
               </form>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="fecha-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Filtrar fallas por fecha</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="{{url_for('admin.filtrar_reportes')}}" method="post" id="form-filtro-fechas">
+    
+                <label>Fecha inicio</label>
+                <input type="date" class="form-control mb-3" name="fecha_inicio" placeholder="yyyy-mm-dd" min="2025-01-01" id="fecha_inicio">
+                <label>Fecha final</label>
+                <input type="date" class="form-control mb-3" name="fecha_fin" placeholder="yyyy-mm-dd" min="2025-01-01" id="fecha_fin">
+    
+                <button type="submit" class="btn btn-primary w-100 btn-fechas">Guardar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="edit-falla__modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Editar falla</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">   
+                <label>Selecciona el Area</label>
+                <select name="area" class="form-control mb-3 select" id = "edit-area">
+                    <option value= "Selecciona un area">Selecciona un area</option>
+                    <option value="Electrica">Electrica</option>
+                    <option value="Plomeria">Plomeria</option>
+                    <option value="Aire acondicionado">Aire acondicionado</option>
+                    <option value="Telecomunicaciones">Telecomunicaciones</option>
+                </select>
+    
+                <label class="label-tipo">Selecciona el tipo de falla</label>
+                <select name="tipo" class=" form-control mb-3 select" id="edit-tipo">
+                    <option value= 'Selecciona un tipo' id="first-op">Selecciona un tipo</option>
+                    <option value="Cambio de iluminacion" class="tipo-electrico option" id="tipo-electrico">Cambio de iluminacion</option>
+                    <option value="Tomacorriente" class="tipo-electrico2 option" id="tipo-electrico2">Tomacorriente</option>
+                    <option value="Cambio de breakers" class="tipo-electrico3 option" id="tipo-electrico3">Cambio de breakers</option>
+                    <option value="Ajuste de breakers" class="tipo-electrico4 option" id="tipo-electrico4">Ajuste de breakers</option>
+                    <option value="Cambio de llave de arresto" class="tipo-plomeria option" id="tipo-plomeria">Cambio de llave de arresto</option>
+                    <option value="Sifon" class="tipo-plomeria2 option" id="tipo-plomeria2">Sifon</option>
+                    <option value="Herraje" class="tipo-plomeria3 option" id="tipo-plomeria3">Herraje</option>
+                    <option value="Manguera W.C/Lavamano" class="tipo-plomeria4 option" id="tipo-plomeria4">Manguera W.C/Lavamano</option>
+                    <option value="Griferias" class="tipo-plomeria5 option" id="tipo-plomeria5">Griferias</option>
+                    <option value="Unidad de aire no enfria" class="tipo-AC option" id="tipo-AC">Unidad de aire no enfria</option>
+                    <option value="Unidad de aire no enciende" class="tipo-AC2 option" id="tipo-AC2">Unidad de aire no enciende</option>
+                    <option value="Telefonia" class="tipo-telecoms option" id="tipo-telecoms">Telefonia</option>
+                    <option value="Internet" class="tipo-telecoms2 option" id="tipo-telecoms2">Internet</option>
+                    <option value="Otro" class="option">Otro</option>
+                </select>
+    
+                <label>Descripcion</label>
+                <textarea class="form-control mb-3" rows="5" name="descripcion" id="edit-descripcion"></textarea>
+    
+                <label>Fecha</label>
+                <input type="date" class="form-control mb-3" name="fecha" placeholder="yyyy-mm-dd" min="2025-01-01" id="edit-fecha">
+
+                <label>Selecciona el estado</label>
+                <select name="estado" class="form-control mb-3 select" id = "estado">
+                    <option value= "Selecciona un estado">Selecciona un estado</option>
+                    <option value="no resuelta">no resuelta</option>
+                    <option value="resuelta">resuelta</option>
+                </select>
+    
+                <input type="hidden" class="input-id__modal" id="edit-id" name="id">
+                <button type="button" class="btn btn-primary w-100 btn-fechas" onclick="put_fallas(document.getElementById('edit-id').value)">Guardar</button>
+              </form>
+            </div>
+          </div>
+         </div>
         </div>
       </div>
 
