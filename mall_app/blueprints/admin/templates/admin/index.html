@@ -7,7 +7,7 @@
 
             <nav class="nav-reportes">
                 <ul class="nav-list__reportes">
-                    <button class="nav-options__reportes btn btn-primary btn-nueva-falla">
+                    <button class="nav-options__reportes btn btn-primary btn-nueva-falla" data-bs-toggle="modal" data-bs-target="#falla-modal">
                         <span>Nueva falla</span>
                     </button>
 
@@ -37,15 +37,77 @@
             <th>Fecha</th>
         </tr>
 
+        {% for falla in reportes %}
         <tr>
-            <td>1</td>
-            <td>Nike</td>
-            <td>Plomeria</td>
-            <td>Lavamano</td>
-            <td>El lavamano tiene una llave rota, y lleva clausurdo una semana ya</td>
-            <td>2025/22/03</td>
-            <td class="td-btn"><button class="btn btn-primary btn-edit-reporte">Editar</button></td>
-            <td class="td-btn"><button class="btn btn-danger btn-del-reporte">Eliminar</button></td>
+            <td>{{falla.idreportes}}</td>
+            <td>{{falla.nombre_tienda}}</td>
+            <td>{{falla.area}}</td>
+            <td>{{falla.tipo}}</td>
+            <td>{{falla.descripcion}}</td>
+            <td>{{falla.fecha}}</td>
+            <td class="td-btn"><button id-reportes="{{falla.idreportes}}" class="btn btn-primary btn-edit-reporte">Editar</button></td>
+            <td class="td-btn"><button class="btn btn-danger btn-del-reporte" id-reportes="{{falla.idreportes}}" onclick="mod_reporte(this.getAttribute('id-reportes'))">Eliminar</button></td>
         </tr>
+        {% endfor %}
     </table>
+
+    <div class="modal fade" id="falla-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva falla</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="{{url_for('admin.index')}}" method="post">
+
+                <label>Nombre de la tienda</label>
+                <select name="tienda" class="form-control mb-3 select">
+                    <option value= "Selecciona una tienda">Selecciona una tienda</option>
+                       {% for record in tiendas %}
+                       <option value="{{record.idtiendas}}">{{record.nombre_tienda}}</option>
+                       {% endfor %}
+                </select>
+    
+                <label>Selecciona el Area</label>
+            <select name="area" class="form-control mb-3 select">
+                <option value= "Selecciona un area">Selecciona un area</option>
+                <option value="Electrica">Electrica</option>
+                <option value="Plomeria">Plomeria</option>
+                <option value="Aire acondicionado">Aire acondicionado</option>
+                <option value="Telecomunicaciones">Telecomunicaciones</option>
+            </select>
+
+            <label class="label-tipo">Selecciona el tipo de falla</label>
+            <select name="tipo" class=" form-control mb-3 select" id="tipo__falla-modal">
+                <option value= "Selecciona un tipo">Selecciona un tipo</option>
+                <option value="Cambio de iluminacion" class="tipo-electrico option">Cambio de iluminacion</option>
+                <option value="Tomacorriente" class="tipo-electrico2 option">Tomacorriente</option>
+                <option value="Cambio de breakers" class="tipo-electrico3 option">Cambio de breakers</option>
+                <option value="Ajuste de breakers" class="tipo-electrico4 option">Ajuste de breakers</option>
+                <option value="Cambio de llave de arresto" class="tipo-plomeria option">Cambio de llave de arresto</option>
+                <option value="Sifon" class="tipo-plomeria2 option">Sifon</option>
+                <option value="Herraje" class="tipo-plomeria3 option">Herraje</option>
+                <option value="Manguera W.C/Lavamano" class="tipo-plomeria4 option">Manguera W.C/Lavamano</option>
+                <option value="Griferias" class="tipo-plomeria5 option">Griferias</option>
+                <option value="Unidad de aire no enfria" class="tipo-AC option">Unidad de aire no enfria</option>
+                <option value="Unidad de aire no enciende" class="tipo-AC2 option">Unidad de aire no enciende</option>
+                <option value="Telefonia" class="tipo-telecoms option">Telefonia</option>
+                <option value="Internet" class="tipo-telecoms2 option">Internet</option>
+                <option value="Otro" class="option">Otro</option>
+            </select>
+    
+                <label>Descripcion</label>
+                <textarea class="form-control mb-3" rows="5" name="descripcion"></textarea>
+    
+                <label>Fecha</label>
+                <input type="date" class="form-control mb-3" name="fecha" placeholder="yyyy-mm-dd" min="2025-01-01" id="fecha">
+    
+                <button type="submit" class="btn btn-primary w-100 btn-fechas">Guardar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
 {% endblock %}
