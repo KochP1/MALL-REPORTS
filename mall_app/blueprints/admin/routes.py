@@ -74,7 +74,7 @@ def tiendas():
     if request.method == 'GET':
         cur = db.cursor()
 
-        cur.execute('SELECT t.idtiendas, t.nombre_tienda, u.nombre, u.apellido FROM tiendas t JOIN usuarios u ON t.usuarios = u.idusuarios')
+        cur.execute('SELECT t.idtiendas, t.nombre_tienda, u.idusuarios, u.nombre, u.apellido FROM tiendas t JOIN usuarios u ON t.usuarios = u.idusuarios')
         data = cur.fetchall()
         cur.close()
         insertTienda = []
@@ -116,3 +116,20 @@ def tiendas():
         finally:
             cur.close()
         return redirect(url_for('admin.tiendas'))
+
+@admin.route('mod_tiendas/<int:idusuario>', methods = ['DELETE', 'PUT'])
+def mod_tiendas(idusuario):
+    db = current_app.config['db']
+    if request.method == 'DELETE':
+        if idusuario:
+            try:
+                cur = db.cursor()
+                cur.execute('DELETE FROM usuarios WHERE idusuarios = %s', (idusuario,))
+                db.commit()
+
+                return jsonify({"message": "Tienda eliminada correctamente."}), 200
+            except Exception as e:
+                print(e)
+                return jsonify({"error": "la tienda no se puedo eliminar."}), 404
+            finally:
+                cur.close()

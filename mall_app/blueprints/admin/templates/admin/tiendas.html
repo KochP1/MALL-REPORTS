@@ -32,8 +32,8 @@
             <td>{{record.nombre_tienda}}</td>
             <td>{{record.nombre}}</td>
             <td>{{record.apellido}}</td>
-            <td class="td-btn"><button class="btn btn-primary btn-edit-reporte">Editar</button></td>
-            <td class="td-btn"><button class="btn btn-danger btn-del-reporte">Eliminar</button></td>
+            <td class="td-btn"><button id-tiendas="{{record.idtiendas}}" class="btn btn-primary btn-edit-reporte">Editar</button></td>
+            <td class="td-btn"><button id-tiendas="{{record.idtiendas}}" id-usuarios="{{record.idusuarios}}" class="btn btn-danger btn-del-reporte" onclick="mod_tiendas(this.getAttribute('id-usuarios'))">Eliminar</button></td>
         </tr>
         {% endfor %}
     </table>
