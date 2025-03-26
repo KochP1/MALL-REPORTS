@@ -26,7 +26,7 @@ def index():
                 if user.rol == 'administrador':
                     return redirect(url_for('admin.index'))
             else:
-                return render_template('users/index.html', message = 'Error')
+                return render_template('users/index.html', message = 'Creadenciales invalidas')
             
         except Exception as e:
             print(e)
@@ -44,6 +44,15 @@ def regist_admin():
         contraseña = request.form['password']
         rol = "administrador"
         hash_contraseña = bcrypt.generate_password_hash(contraseña).decode('utf-8')
+
+        if len(nombre) > 20:
+            return redirect(url_for('admin.index'))
+        elif len(apellido) > 20:
+            return redirect(url_for('admin.index'))
+        elif len(email) > 50:
+            return redirect(url_for('admin.index'))
+        elif len(contraseña) > 12:
+            return redirect(url_for('admin.index'))
 
         try:
             cur = db.cursor()

@@ -37,6 +37,10 @@ def index():
         fecha = request.form['fecha']
         estado = 'no resuelta'
         print(tienda)
+        print(type(fecha))
+
+        if len(descripcion) > 100:
+            return redirect(url_for('admin.index'))
 
         try:
             cur = db.cursor()
@@ -94,6 +98,17 @@ def tiendas():
         contraseña = request.form['contraseña']
         rol = 'tienda'
         hash_contraseña = bcrypt.generate_password_hash(contraseña).decode('utf-8')
+
+        if len(nombreTienda) > 30:
+            return redirect(url_for('admin.index'))
+        elif len(nombreEncargado) > 20:
+            return redirect(url_for('admin.index'))
+        elif len(apellidoEncargado) > 20:
+            return redirect(url_for('admin.index'))
+        elif len(email) > 50:
+            return redirect(url_for('admin.index'))
+        elif len(contraseña) > 12:
+            return redirect(url_for('admin.index'))
 
         try:
             cur = db.cursor()
