@@ -421,6 +421,12 @@ body{
     border-color: #324768 !important;
 }
 
+@media print {
+    .td-btn {
+        display: none !important;
+    }
+}
+
 /* END MODAL NUEVA TIENDA */
 
 /* END REPORTES Y TIENDAS */
