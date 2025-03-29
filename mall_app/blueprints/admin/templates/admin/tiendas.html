@@ -28,11 +28,13 @@
 
         {% for record in tiendas %}
         <tr>
-            <td>{{record.idtiendas}}</td>
-            <td>{{record.nombre_tienda}}</td>
-            <td>{{record.nombre}}</td>
-            <td>{{record.apellido}}</td>
-            <td class="td-btn"><button id-tiendas="{{record.idtiendas}}" class="btn btn-primary btn-edit-reporte">Editar</button></td>
+            <td id="id-{{record.idtiendas}}">{{record.idtiendas}}</td>
+            <td id="tienda-{{record.idtiendas}}">{{record.nombre_tienda}}</td>
+            <td id="nombre-{{record.idtiendas}}">{{record.nombre}}</td>
+            <td id="apellido-{{record.idtiendas}}">{{record.apellido}}</td>
+
+            <td class="td-btn"><button id-tiendas="{{record.idtiendas}}" class="btn btn-primary btn-edit-reporte" data-bs-toggle="modal" data-bs-target="#edit-tienda-modal" onclick="editTienda(this.getAttribute('id-tiendas'))">Editar</button></td>
+
             <td class="td-btn"><button id-tiendas="{{record.idtiendas}}" id-usuarios="{{record.idusuarios}}" class="btn btn-danger btn-del-reporte" onclick="mod_tiendas(this.getAttribute('id-usuarios'))">Eliminar</button></td>
         </tr>
         {% endfor %}
@@ -70,6 +72,37 @@
                     <div class="new-tienda-input__container">
                         <label for="contraseña-tienda">Contraseña</label>
                         <input type="password" name="contraseña" id="contraseña-tienda">
+                    </div>
+
+                    <button class="btn btn-primary btn-nueva-tienda">Enviar</button>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="edit-tienda-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Ediatr Tienda</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" class="new-tienda__form">
+                    <div class="new-tienda-input__container">
+                        <label for="edit-tienda">Nombre de la tienda</label>
+                        <input type="text" name="tienda" id="edit-tienda">
+                    </div>
+
+                    <div class="new-tienda-input__container">
+                        <label for="edit-tienda">Nombre del encargado</label>
+                        <input type="text" name="nombre" id="edit-nombre-tienda">
+                    </div>
+
+                    <div class="new-tienda-input__container">
+                        <label for="edit-apellido-tienda">Apellido del encargado</label>
+                        <input type="text" name="apellido" id="edit-apellido-tienda">
                     </div>
 
                     <button class="btn btn-primary btn-nueva-tienda">Enviar</button>

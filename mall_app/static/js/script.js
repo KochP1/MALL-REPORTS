@@ -91,6 +91,8 @@ function edit_reporte(id) {
                     option.selected = true;
         }
     }
+
+    areaSelect.dispatchEvent(new Event('change'));
     
     // Seleccionar la opción correcta en el campo de tipo
     const tipoSelect = document.getElementById('edit-tipo');
@@ -101,10 +103,11 @@ function edit_reporte(id) {
     }
     
     // Seleccionar la opción correcta en el campo de estado
-    const selectEstados = document.getElementById('estado');
-            for (let option of selectEstados.options) {
-                if (estado.toLowerCase().includes(option.text.toLowerCase())) {
-                    option.selected = true;
+    const selectEstados = document.getElementById('estado'); // Cambiado a edit-estado
+    for (let option of selectEstados.options) {
+        if (option.value === estado) { // Comparación exacta
+            option.selected = true;
+            break; // Salir del bucle una vez encontrado
         }
     }
 }
@@ -112,6 +115,10 @@ function edit_reporte(id) {
 function selecOptionsControlEditModal() {
     // Obtener el select de 'Area' y sus opciones de tipo para el modal de editar falla
     let areaSelectEdit = document.querySelector('#edit-falla__modal select[name="area"]');
+
+    if (areaSelectEdit === null) {
+        return null;
+    }
         
     // Obtener los select de tipo para cada área en el modal de editar falla
     let tipoElectricoEdit = document.querySelector('#edit-falla__modal .tipo-electrico');
@@ -178,6 +185,10 @@ selecOptionsControlEditModal();
 
 function selectOptionsControlFallaModal() {
     let areaSelect = document.querySelector('select[name="area"]');
+
+    if (areaSelect === null) {
+        return null;
+    }
         
         // Obtener los select de tipo para cada área
         let tipoElectrico = document.querySelector('.tipo-electrico');
@@ -245,4 +256,18 @@ function selectOptionsControlFallaModal() {
 }
 
 selectOptionsControlFallaModal();
+
+
+function editTienda(id) {
+    console.log(id);
+
+    const tienda = document.getElementById(`tienda-${id}`).textContent;
+    const nombre = document.getElementById(`nombre-${id}`).textContent;
+    const apellido = document.getElementById(`apellido-${id}`).textContent;
+
+    document.getElementById('edit-tienda').value = tienda;
+    document.getElementById('edit-nombre-tienda').value = nombre;
+    document.getElementById('edit-apellido-tienda').value = apellido;
+
+}
 

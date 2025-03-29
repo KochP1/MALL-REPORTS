@@ -24,14 +24,12 @@
             </div>
         </div>
 
-        <div class="user-options__header">
-            <form action="" method="get" class="search-input__form">
-                <input type="search" class="search-input" placeholder="Buscar tienda">
-                <button class="btn-search">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-            </form>
-    
+        <a href="{{url_for('admin.index')}}">
+            <div class=" mobile-logo">
+                <img src="../img/inmigracion.png" alt="Mall reports" class="logo" width="60px" height="60px">
+            </div>
+        </a>
+
             <div class="user-img__container">
                 <span>{{current_user.nombre[0]}}</span>
     
@@ -47,7 +45,6 @@
                     </ul>
                 </div>
             </div>
-        </div>
     </header>
 
     <nav class="side-nav">
