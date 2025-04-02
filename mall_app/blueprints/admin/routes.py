@@ -210,7 +210,7 @@ def tiendas():
             cur.close()
         return redirect(url_for('admin.tiendas'))
 
-@admin.route('mod_tiendas/<int:idusuario>', methods = ['DELETE', 'PUT'])
+@admin.route('mod_tiendas/<int:idusuario>', methods = ['DELETE'])
 def mod_tiendas(idusuario):
     db = current_app.config['db']
     if request.method == 'DELETE':
@@ -226,3 +226,39 @@ def mod_tiendas(idusuario):
                 return jsonify({"error": "la tienda no se puedo eliminar."}), 404
             finally:
                 cur.close()
+
+@admin.route('/edit_tiendas/<int:idtiendas>', methods = ['PATCH'])
+def edit_tiendas(idtiendas):
+    db = current_app.config['db']
+    if request.method == 'PATCH':
+        if not idtiendas and not request.is_json:
+            return jsonify({'error': 'El cuerpo debe ser JSON'}), 400
+        
+        data = request.get_json()
+
+        required_fields = ['idusuario', 'Nombre', 'Apellido', 'Nombre_tienda']
+        if not all(field in data for field in required_fields):
+            return jsonify({'error': 'Faltan campos requeridos'}), 400
+        
+        try:
+            cur = db.cursor()
+            sql = 'UPDATE tiendas t JOIN usuarios u ON usuarios = idusuarios SET u.nombre = %s, u.apellido = %s, t.nombre_tienda = %s WHERE usuarios = %s'
+            sql_data = (data['Nombre'], data['Apellido'], data['Nombre_tienda'], data['idusuario'])
+            cur.execute(sql, sql_data)
+            db.commit()
+
+            # Retornar éxito
+            return jsonify({
+            "success": True,
+            "message": "Reporte actualizado correctamente",
+            "updated_id": idtiendas
+            }), 200
+        except Exception as e:
+            print(e)
+            return jsonify({
+                "success": False,
+                "message": "Error al actualizar los datos",
+                "error": str(e)
+            }), 500
+        finally:
+            cur.close()

@@ -28,12 +28,13 @@
 
         {% for record in tiendas %}
         <tr>
-            <td id="id-{{record.idtiendas}}">{{record.idtiendas}}</td>
+            <td id="id-tienda-{{record.idtiendas}}">{{record.idtiendas}}</td>
             <td id="tienda-{{record.idtiendas}}">{{record.nombre_tienda}}</td>
             <td id="nombre-{{record.idtiendas}}">{{record.nombre}}</td>
             <td id="apellido-{{record.idtiendas}}">{{record.apellido}}</td>
 
-            <td class="td-btn"><button id-tiendas="{{record.idtiendas}}" class="btn btn-primary btn-edit-reporte" data-bs-toggle="modal" data-bs-target="#edit-tienda-modal" onclick="editTienda(this.getAttribute('id-tiendas'))">Editar</button></td>
+            <td class="td-btn"><button id-tiendas="{{record.idtiendas}}" class="btn btn-primary btn-edit-reporte" data-bs-toggle="modal" data-bs-target="#edit-tienda-modal" onclick="editTienda(this.getAttribute('id-tiendas'))">Editar</button>
+            <input type="hidden" value="{{record.idusuarios}}" id="id-user-tienda-{{record.idtiendas}}"></td>
 
             <td class="td-btn"><button id-tiendas="{{record.idtiendas}}" id-usuarios="{{record.idusuarios}}" class="btn btn-danger btn-del-reporte" onclick="mod_tiendas(this.getAttribute('id-usuarios'))">Eliminar</button></td>
         </tr>
@@ -89,7 +90,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" method="post" class="new-tienda__form">
+                <div class="new-tienda__form">
                     <div class="new-tienda-input__container">
                         <label for="edit-tienda">Nombre de la tienda</label>
                         <input type="text" name="tienda" id="edit-tienda">
@@ -105,8 +106,11 @@
                         <input type="text" name="apellido" id="edit-apellido-tienda">
                     </div>
 
-                    <button class="btn btn-primary btn-nueva-tienda">Enviar</button>
-                </form>
+                    <input type="hidden" id="edit-tienda-id">
+                    <input type="hidden" id="edit-tienda-user-id">
+
+                    <button class="btn btn-primary btn-nueva-tienda" onclick="patch_tienda()">Enviar</button>
+                </div>
             </div>
           </div>
         </div>

@@ -67,8 +67,38 @@ function put_fallas(id) {
             alert('Error al editar la falla')
         }
     }).catch (error => {
-        console.error(`Error: ${error}`)
+        console.error(`Error: ${error}`);
     })
+}
+
+function patch_tienda() {
+    const id_tienda = document.getElementById('edit-tienda-id').value;
+    const tienda = document.getElementById('edit-tienda').value;
+    const nombreEncargado = document.getElementById('edit-nombre-tienda').value;
+    const apellidoEncargado = document.getElementById('edit-apellido-tienda').value;
+    const idusuario = document.getElementById('edit-tienda-user-id').value;
+
+    if (id_tienda === null) {
+        alert('Error al editar tienda');
+    }
+
+    const url = `/admin/edit_tiendas/${id_tienda}`;
+
+    fetch(url, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({'idusuario': idusuario, 'Nombre': nombreEncargado, 'Apellido': apellidoEncargado, 'Nombre_tienda': tienda})
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        window.location.href = "/admin/tiendas";
+    }).catch(error => {
+        console.log(`Error: ${error}`)
+    })
+
 }
 
 // FRONT END
@@ -259,15 +289,18 @@ selectOptionsControlFallaModal();
 
 
 function editTienda(id) {
-    console.log(id);
 
     const tienda = document.getElementById(`tienda-${id}`).textContent;
     const nombre = document.getElementById(`nombre-${id}`).textContent;
     const apellido = document.getElementById(`apellido-${id}`).textContent;
+    const id_tienda = document.getElementById(`id-tienda-${id}`).textContent;
+    const id_Usuariotienda = document.getElementById(`id-user-tienda-${id}`).value;
 
     document.getElementById('edit-tienda').value = tienda;
     document.getElementById('edit-nombre-tienda').value = nombre;
     document.getElementById('edit-apellido-tienda').value = apellido;
+    document.getElementById('edit-tienda-id').value = id_tienda;
+    document.getElementById('edit-tienda-user-id').value = id_Usuariotienda;
 
 }
 

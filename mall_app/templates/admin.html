@@ -56,6 +56,7 @@
 
         <div class="options__container">
 
+            {% if current_user.rol == 'administrador' %}
             <div class="option">
                 <a href="{{url_for('admin.index')}}" class="nav-bar__link">
                     <i class="fa-solid fa-circle-exclamation"></i>
@@ -76,6 +77,19 @@
                     <span>Estadísticas</span>
                 </a>
             </div>
+
+            {% endif %}
+
+            {% if current_user.rol == 'tienda' %}
+
+            <div class="option">
+                <a href="#" class="nav-bar__link">
+                    <i class="fa-solid fa-store"></i>
+                    <span>Mi tienda</span>
+                </a>
+            </div>
+
+            {% endif %}
 
             <div class="option">
                 <a href="#" class="nav-bar__link">
