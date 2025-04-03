@@ -447,10 +447,102 @@ body{
     }
 }
 
-
 /* END ADMIN MAIN-SECTION */
 
 /* END ADMIN DASHBOARD */
+
+
+
+
+
+/* TIENDAS DASHBOARD */
+
+/* MIS REPORTES */
+
+.tiendas-grid-wrapper{
+    width: 100%;
+    height: max-content;
+    display: grid;
+    grid-template-columns: repeat(3, 500px);
+    grid-template-rows: repeat(autofill);
+    gap: 10px;
+}
+
+.tienda-card{
+    margin-top: 20px;
+    height: max-content;
+    display: flex;
+    align-items: start;
+    height: 290px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 0px #333;
+}
+
+.tienda-card:first-child{
+    margin-left: 15px;
+}
+
+.side-line-decorator{
+    width: 10px;
+    height: 100%;
+    border-radius: 10px;
+    background-color: #eda60c;
+}
+
+.tienda-card-items__container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.tienda-card-item, .tienda-card-footer{
+    width: 100%;
+}
+
+.tienda-card-item h2{
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.tienda-card-header{
+    margin-top: 10px;
+    border-bottom: 1px solid #545353;
+    display: flex;
+    justify-content: center;
+}
+
+.tienda-card-body {
+    display: flex;
+    justify-content: center;
+    height: 90%;
+}
+
+.tienda-card-body textarea{
+    width: 90%;
+    height: 100%;
+    border: none;
+    box-shadow: 0px 0px 3px 0px #333;
+    resize: none;
+}
+
+.tienda-card-body textarea:focus{
+    outline: none;
+    border: none;
+}
+
+.tienda-card-footer{
+    display: flex;
+    gap: 330px;
+}
+
+.card-fecha-reporte{
+    margin-left: 25px;
+}
+
+/* END MIS REPORTES */
+
+/* END TIENDAS DASHBOARD */
 
 
 

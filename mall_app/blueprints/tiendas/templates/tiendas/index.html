@@ -1,8 +1,40 @@
 {% extends 'admin.html' %}
 {% block title %} Tiendas {% endblock %}
 
-{% block content%} 
+{% block content%}
 
-<h1>Hola {{current_user.nombre}}</h1>
+<div class="opciones-reportes__container">
+
+    <nav class="nav-reportes">
+        <ul class="nav-list__reportes">
+            <button class="nav-options__reportes btn btn-primary btn-nueva-falla btn-falllas-tiendas" data-bs-toggle="modal" data-bs-target="#tienda-falla-modal">
+                <span>Nueva falla</span>
+            </button>
+        </ul>
+    </nav>
+
+</div>
+
+<div class="tiendas-grid-wrapper">
+
+    <div class="tienda-card">
+        <div class="side-line-decorator"></div>
+
+        <div class="tienda-card-items__container">
+            <div class="tienda-card-item tienda-card-header">
+                <h2>Falla eléctrica, tomacorrientes</h2>
+            </div>
+    
+            <div class="tienda-card-item tienda-card-body">
+                <textarea name="" id="" rows="8" readonly>Tomacorrientes dañado en area de probadores.</textarea>
+            </div>
+    
+            <div class="tienda-card-footer">
+                <span class="card-fecha-reporte">2025/03/04</span>
+                <input type="checkbox">
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
