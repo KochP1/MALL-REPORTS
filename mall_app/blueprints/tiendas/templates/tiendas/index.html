@@ -17,24 +17,86 @@
 
 <div class="tiendas-grid-wrapper">
 
+    {% for falla in fallas %}
+    {% if falla.estado == 'no resuelta' %}
     <div class="tienda-card">
         <div class="side-line-decorator"></div>
 
         <div class="tienda-card-items__container">
             <div class="tienda-card-item tienda-card-header">
-                <h2>Falla eléctrica, tomacorrientes</h2>
+                <h2>Falla {{falla.area}}</h2>
+                <h2>{{falla.tipo}}</h2>
             </div>
     
             <div class="tienda-card-item tienda-card-body">
-                <textarea name="" id="" rows="8" readonly>Tomacorrientes dañado en area de probadores.</textarea>
+                <textarea name="" id="" rows="8" readonly>{{falla.descripcion}}</textarea>
             </div>
     
             <div class="tienda-card-footer">
-                <span class="card-fecha-reporte">2025/03/04</span>
-                <input type="checkbox">
+                <span class="card-fecha-reporte">{{falla.fecha}}</span>
+                <button class="btn-resolver" idreporte="{{falla.idreportes}}" onclick="change_estado(this.getAttribute('idreporte'))">
+                    <i class="fa-solid fa-check"></i>
+                </button>
             </div>
         </div>
     </div>
+    {% endif %}
+    {% endfor %}
 </div>
+
+
+<div class="modal fade" id="tienda-falla-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva falla</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{{url_for('tienda.index')}}" method="post">
+
+            <label>Nombre de la tienda</label>
+            <input type="hidden" name="tienda" class="form-control mb-3 select" readonly value="{{tienda}}">
+
+            <label>Selecciona el Area</label>
+        <select name="area" class="form-control mb-3 select">
+            <option value= "Selecciona un area">Selecciona un area</option>
+            <option value="Electrica">Electrica</option>
+            <option value="Plomeria">Plomeria</option>
+            <option value="Aire acondicionado">Aire acondicionado</option>
+            <option value="Telecomunicaciones">Telecomunicaciones</option>
+        </select>
+
+        <label class="label-tipo">Selecciona el tipo de falla</label>
+        <select name="tipo" class=" form-control mb-3 select" id="tipo__falla-modal">
+            <option value= "Selecciona un tipo">Selecciona un tipo</option>
+            <option value="Cambio de iluminacion" class="tipo-electrico option">Cambio de iluminacion</option>
+            <option value="Tomacorriente" class="tipo-electrico2 option">Tomacorriente</option>
+            <option value="Cambio de breakers" class="tipo-electrico3 option">Cambio de breakers</option>
+            <option value="Ajuste de breakers" class="tipo-electrico4 option">Ajuste de breakers</option>
+            <option value="Cambio de llave de arresto" class="tipo-plomeria option">Cambio de llave de arresto</option>
+            <option value="Sifon" class="tipo-plomeria2 option">Sifon</option>
+            <option value="Herraje" class="tipo-plomeria3 option">Herraje</option>
+            <option value="Manguera W.C/Lavamano" class="tipo-plomeria4 option">Manguera W.C/Lavamano</option>
+            <option value="Griferias" class="tipo-plomeria5 option">Griferias</option>
+            <option value="Unidad de aire no enfria" class="tipo-AC option">Unidad de aire no enfria</option>
+            <option value="Unidad de aire no enciende" class="tipo-AC2 option">Unidad de aire no enciende</option>
+            <option value="Telefonia" class="tipo-telecoms option">Telefonia</option>
+            <option value="Internet" class="tipo-telecoms2 option">Internet</option>
+            <option value="Otro" class="option">Otro</option>
+        </select>
+
+            <label>Descripcion</label>
+            <textarea class="form-control mb-3" rows="5" name="descripcion"></textarea>
+
+            <label>Fecha</label>
+            <input type="date" class="form-control mb-3" name="fecha" placeholder="yyyy-mm-dd" min="2025-01-01" id="fecha">
+
+            <button type="submit" class="btn btn-primary w-100 btn-fechas">Guardar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}

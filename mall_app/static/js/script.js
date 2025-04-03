@@ -49,7 +49,7 @@ function put_fallas(id) {
     const idreportes = parseInt(id);
     const url = `/admin/edit_reporte/${idreportes}`;
 
-    if (descripcion.length) {
+    if (descripcion.length > 100) {
         alert('La descripcion es muy larga');
         return false;
     }
@@ -99,6 +99,27 @@ function patch_tienda() {
         console.log(`Error: ${error}`)
     })
 
+}
+
+function change_estado(id) {
+    const estado = 'resuelta';
+    const url = `/tienda/toggle_estado/${id}`;
+
+    fetch(url, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({'estado': estado})
+    }).then(response => {
+        if (response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        window.location.reload();
+    }).catch(error =>{
+        console.log(error);
+    })
 }
 
 // FRONT END

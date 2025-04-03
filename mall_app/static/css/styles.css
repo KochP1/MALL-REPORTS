@@ -120,7 +120,7 @@ body{
 @media (max-width:1426px) {
     .dashboard-body {
         grid-template-columns: 100vw 100vw !important;
-        grid-template-rows: 3fr 4fr !important;
+        grid-template-rows: 1fr 8fr !important;
         grid-template-areas:
         "header header header header"
         "main main main main"
@@ -262,6 +262,7 @@ body{
     .side-nav{
         grid-area: none;
         background-color: #324768;
+        display: none;
         
     }
 }
@@ -464,7 +465,7 @@ body{
     height: max-content;
     display: grid;
     grid-template-columns: repeat(3, 500px);
-    grid-template-rows: repeat(autofill);
+    grid-template-rows: repeat(autofill, 350px);
     gap: 10px;
 }
 
@@ -473,18 +474,14 @@ body{
     height: max-content;
     display: flex;
     align-items: start;
-    height: 290px;
     border-radius: 10px;
     box-shadow: 0px 0px 5px 0px #333;
-}
-
-.tienda-card:first-child{
     margin-left: 15px;
 }
 
 .side-line-decorator{
     width: 10px;
-    height: 100%;
+    height: 350px;
     border-radius: 10px;
     background-color: #eda60c;
 }
@@ -509,7 +506,8 @@ body{
     margin-top: 10px;
     border-bottom: 1px solid #545353;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .tienda-card-body {
@@ -538,6 +536,47 @@ body{
 
 .card-fecha-reporte{
     margin-left: 25px;
+}
+
+.btn-resolver{
+    width: max-content;
+    height: max-content;
+    border: none;
+    background-color: transparent;
+}
+
+@media (max-width: 1778px) {
+    .tiendas-grid-wrapper{
+        grid-template-columns: repeat(2, 500px);
+        justify-content: center;
+    }
+}
+
+@media (max-width: 1004px) {
+    .tiendas-grid-wrapper{
+        grid-template-columns: repeat(1, 500px);
+        justify-content: center;
+    }
+}
+
+@media (max-width: 490px) {
+    .tiendas-grid-wrapper{
+        grid-template-columns: repeat(1, 100%);
+        justify-content: left;
+    }
+
+    .tienda-card-footer{
+        gap: 0;
+    }
+
+    .tienda-card-footer button{
+        margin-left: auto;
+        margin-right: 15px;
+    }
+
+    .tienda-card{
+        margin-left: 0px;
+    }
 }
 
 /* END MIS REPORTES */
