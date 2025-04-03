@@ -30,10 +30,10 @@
             </div>
         </a>
 
-            <div class="user-img__container">
+            <div class="user-img__container" id="toggle-menu">
                 <span>{{current_user.nombre[0]}}</span>
     
-                <div class="drop-down-menu">
+                <div class="drop-down-menu" id="drop-down">
                     <ul class="user-menu__list">
                         <li class="user-menu__item">
                             <a href="{{url_for('users.log_out')}}">Cerrar sesión</a>

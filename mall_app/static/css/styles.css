@@ -172,6 +172,10 @@ body{
     margin: 0;
 }
 
+.user-menu__list li:hover{
+    background-color: #e0dddd;
+}
+
 .user-menu__item{
     padding-left: 15px;
 }
@@ -186,9 +190,7 @@ body{
     border-bottom: 1px solid #333;
 }
 
-.user-img__container:hover .drop-down-menu{
-    display: block !important;
-}
+
 .mobile-logo{
     display: none;
     width: max-content;
@@ -254,6 +256,14 @@ body{
 
 .option:last-child{
     margin-top: 250px;
+}
+
+@media (max-width:1426px) {
+    .side-nav{
+        grid-area: none;
+        background-color: #324768;
+        
+    }
 }
 
 /* END ADMIN SIDE-NAV */

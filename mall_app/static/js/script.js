@@ -103,6 +103,23 @@ function patch_tienda() {
 
 // FRONT END
 
+document.addEventListener("DOMContentLoaded", () => {
+    const toggleMenu = document.getElementById("toggle-menu");
+
+    toggleMenu.addEventListener("click", () => {
+        const dropMenu = document.getElementById('drop-down');
+        console.log(dropMenu);
+        dropMenu.classList.toggle("active");
+
+        if (dropMenu.classList.contains("active")) {
+            dropMenu.style.display = 'block';
+        } else {
+            dropMenu.style.display = 'none';
+        }
+
+    });
+})
+
 function edit_reporte(id) {
     const area = document.getElementById(`area-${id}`).textContent;
     const tipo = document.getElementById(`tipo-${id}`).textContent;

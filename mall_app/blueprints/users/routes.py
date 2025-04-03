@@ -23,7 +23,10 @@ def index():
                 login_user(user)
                 print("hash successfull")
 
-                return redirect(url_for('admin.index'))
+                if user.rol == 'administrador':
+                    return redirect(url_for('admin.index'))
+                if user.rol == 'tienda':
+                    return redirect(url_for('tienda.index'))
             else:
                 return render_template('users/index.html', message = 'Creadenciales invalidas')
             

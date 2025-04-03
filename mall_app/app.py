@@ -54,9 +54,11 @@ def create_app():
     # import and register all blueprints
     from mall_app.blueprints.admin.routes import admin
     from mall_app.blueprints.users.routes import users
+    from mall_app.blueprints.tiendas.routes import tienda
 
     app.register_blueprint(users, url_prefix='/')
     app.register_blueprint(admin, url_prefix='/admin')
+    app.register_blueprint(tienda, url_prefix='/tienda')
 
     # Pasar la conexión a la base de datos al Blueprint
     app.config['db'] = db
