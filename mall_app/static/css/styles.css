@@ -502,6 +502,10 @@ body{
     border-bottom: none;
 }
 
+.ajustes-opt:last-child button{
+    margin-bottom: 40px;
+}
+
 /* END AJUSTES */
 
 /* END ADMIN MAIN-SECTION */
