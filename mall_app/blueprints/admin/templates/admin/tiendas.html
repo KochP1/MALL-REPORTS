@@ -36,7 +36,7 @@
             <td class="td-btn"><button id-tiendas="{{record.idtiendas}}" class="btn btn-primary btn-edit-reporte" data-bs-toggle="modal" data-bs-target="#edit-tienda-modal" onclick="editTienda(this.getAttribute('id-tiendas'))">Editar</button>
             <input type="hidden" value="{{record.idusuarios}}" id="id-user-tienda-{{record.idtiendas}}"></td>
 
-            <td class="td-btn"><button id-tiendas="{{record.idtiendas}}" id-usuarios="{{record.idusuarios}}" class="btn btn-danger btn-del-reporte" onclick="mod_tiendas(this.getAttribute('id-usuarios'))">Eliminar</button></td>
+            <td class="td-btn"><button id-tiendas="{{record.idtiendas}}" id-usuarios="{{record.idusuarios}}" class="btn btn-danger btn-del-reporte" onclick="elim_usuario(this.getAttribute('id-usuarios'))">Eliminar</button></td>
         </tr>
         {% endfor %}
     </table>

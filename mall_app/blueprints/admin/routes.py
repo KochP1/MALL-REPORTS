@@ -93,12 +93,6 @@ def mod_reporte(idreportes):
                 return jsonify({"error": "El reporte no existe."}), 404
             finally:
                 cur.close()
-    
-    if request.method == 'PUT':
-        if idreportes:
-            data = request.get_json()
-            print(data)
-            return redirect(url_for('admin.index'))
 
 @admin.route('/edit_reporte/<int:idreportes>', methods = ['PUT'])
 def edit_reorte(idreportes):
@@ -210,7 +204,7 @@ def tiendas():
             cur.close()
         return redirect(url_for('admin.tiendas'))
 
-@admin.route('mod_tiendas/<int:idusuario>', methods = ['DELETE'])
+@admin.route('elim_usuario/<int:idusuario>', methods = ['DELETE'])
 def mod_tiendas(idusuario):
     db = current_app.config['db']
     if request.method == 'DELETE':
@@ -220,10 +214,10 @@ def mod_tiendas(idusuario):
                 cur.execute('DELETE FROM usuarios WHERE idusuarios = %s', (idusuario,))
                 db.commit()
 
-                return jsonify({"message": "Tienda eliminada correctamente."}), 200
+                return jsonify({"message": "Usuario eliminado correctamente."}), 200
             except Exception as e:
                 print(e)
-                return jsonify({"error": "la tienda no se puedo eliminar."}), 404
+                return jsonify({"error": "El usuario no se puedo eliminar."}), 404
             finally:
                 cur.close()
 

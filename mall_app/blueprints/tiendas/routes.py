@@ -11,6 +11,16 @@ def index():
     if request.method == 'GET':
         cur = db.cursor()
         idusuario = (current_user.id,)
+
+        sql_tienda = 'SELECT * from tiendas t WHERE t.usuarios = %s'
+        cur.execute(sql_tienda, idusuario)
+        tienda = cur.fetchall()
+        insertTienda = []
+        columTiendaNamens = [column[0] for column in cur.description]
+        for record in tienda:
+            insertTienda.append(dict(zip(columTiendaNamens, record)))
+        print(insertTienda)
+
         sql_falla = 'SELECT r.idreportes, r.area, r.tipo, r.descripcion, r.fecha, r.estado, t.idtiendas, t.nombre_tienda FROM reportes r JOIN tiendas t ON t.idtiendas = r.tienda WHERE t.usuarios = %s'
         cur.execute(sql_falla, idusuario)
         reportes = cur.fetchall()
@@ -18,9 +28,8 @@ def index():
         columNamens = [column[0] for column in cur.description]
         for record in reportes:
             insertReporte.append(dict(zip(columNamens, record)))
-        nombre_tienda = insertReporte[0]["idtiendas"]
         cur.close()
-        return render_template('tiendas/index.html', fallas = insertReporte, tienda = nombre_tienda)
+        return render_template('tiendas/index.html', fallas = insertReporte, tienda = insertTienda)
     
     if request.method == 'POST':
         tienda = request.form['tienda']

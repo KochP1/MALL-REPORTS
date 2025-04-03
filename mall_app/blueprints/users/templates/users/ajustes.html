@@ -22,7 +22,7 @@
     <div class="ajustes-opt">
         <h2 class="eliminar-cuenta-h2">Eliminar cuenta</h2>
         <span>Una vez que eliminas tu cuenta, no hay vuelta atras, debes estar seguro.</span>
-        <button class="btn btn-danger" idusuario="{{current_user.id}}">Eliminar</button>
+        <button class="btn btn-danger" idusuario="{{current_user.id}}" onclick="elim_usuario(this.getAttribute('idusuario'))">Eliminar</button>
     </div>
 </div>
 

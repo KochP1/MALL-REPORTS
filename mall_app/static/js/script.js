@@ -19,8 +19,8 @@ async function mod_reporte(id) {
     }
 }
 
-async function mod_tiendas(idusuarios) {
-    const url = `/admin/mod_tiendas/${idusuarios}`;
+async function elim_usuario(idusuarios) {
+    const url = `/admin/elim_usuario/${idusuarios}`;
 
     if (confirm('¿Estás seguro de que deseas eliminar esta tienda?')) {
         try {
