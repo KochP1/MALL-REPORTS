@@ -74,6 +74,24 @@ def ajustes():
     if request.method == 'GET':
         return render_template('users/ajustes.html')
 
+@users.route('elim_usuario_mi_usuario/<int:idusuario>', methods = ['DELETE'])
+def elim_usuario_mi_usuario(idusuario):
+    db = current_app.config['db']
+    if request.method == 'DELETE':
+        if idusuario:
+            try:
+                cur = db.cursor()
+                cur.execute('DELETE FROM usuarios WHERE idusuarios = %s', (idusuario,))
+                db.commit()
+
+                return jsonify({"message": "Usuario eliminado correctamente."}), 200
+            except Exception as e:
+                print(e)
+                return jsonify({"error": "El usuario no se puedo eliminar."}), 404
+            finally:
+                cur.close()
+
+
 @users.route('/log_out')
 def log_out():
     logout_user()

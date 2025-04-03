@@ -19,8 +19,8 @@ async function mod_reporte(id) {
     }
 }
 
-async function elim_usuario(idusuarios) {
-    const url = `/admin/elim_usuario/${idusuarios}`;
+async function elim_usuario_admins(idusuarios) {
+    const url = `/admin/elim_usuario_admins/${idusuarios}`;
 
     if (confirm('¿Estás seguro de que deseas eliminar esta tienda?')) {
         try {
@@ -36,6 +36,27 @@ async function elim_usuario(idusuarios) {
         } catch (error) {
             console.error('Error:', error);
             alert('No se pudo eliminar el reporte. Por favor, inténtalo nuevamente.');
+        }
+    }
+}
+
+async function elim_usuario_mi_usuario(idusuarios) {
+    const url = `/elim_usuario_mi_usuario/${idusuarios}`;
+
+    if (confirm('¿Estás seguro de que deseas eliminar tu usuario?')) {
+        try {
+            const response = await fetch(url, { method: 'DELETE' });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            console.log('Operación exitosa');
+            window.location.href = "/";
+            
+        } catch (error) {
+            console.error('Error:', error);
+            alert('No se pudo eliminar el usuario. Por favor, inténtalo nuevamente.');
         }
     }
 }

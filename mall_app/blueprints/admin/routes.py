@@ -204,8 +204,8 @@ def tiendas():
             cur.close()
         return redirect(url_for('admin.tiendas'))
 
-@admin.route('elim_usuario/<int:idusuario>', methods = ['DELETE'])
-def mod_tiendas(idusuario):
+@admin.route('elim_usuario_admins/<int:idusuario>', methods = ['DELETE'])
+def elim_usuario_admins(idusuario):
     db = current_app.config['db']
     if request.method == 'DELETE':
         if idusuario:
@@ -214,10 +214,10 @@ def mod_tiendas(idusuario):
                 cur.execute('DELETE FROM usuarios WHERE idusuarios = %s', (idusuario,))
                 db.commit()
 
-                return jsonify({"message": "Usuario eliminado correctamente."}), 200
+                return jsonify({"message": "Tienda eliminada correctamente."}), 200
             except Exception as e:
                 print(e)
-                return jsonify({"error": "El usuario no se puedo eliminar."}), 404
+                return jsonify({"error": "La tienda no se puedo eliminar."}), 404
             finally:
                 cur.close()
 
