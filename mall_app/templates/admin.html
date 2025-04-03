@@ -83,7 +83,15 @@
             {% if current_user.rol == 'tienda' %}
 
             <div class="option">
-                <a href="#" class="nav-bar__link">
+                <a href="" class="nav-bar__link">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span>Mis reportes</span>
+                </a>
+            </div>
+
+
+            <div class="option">
+                <a href="{{url_for('tienda.index')}}" class="nav-bar__link">
                     <i class="fa-solid fa-store"></i>
                     <span>Mi tienda</span>
                 </a>
