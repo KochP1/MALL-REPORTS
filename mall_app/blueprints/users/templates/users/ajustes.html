@@ -1,0 +1,29 @@
+{% extends 'admin.html' %}
+
+{% block title %} Configuración {% endblock %}
+
+{% block content %}
+
+<div class="ajustes-opt__container">
+    <div class="ajustes-opt">
+        <h2>Cambiar email</h2>
+        <input type="email" value="{{current_user.email}}" name="email" id="email-{{current_user.id}}">
+        <input type="password" name="contraseña-actual" id="contraseña-{{current_user.id}}">
+        <button class="btn btn-primary btn-config-cambiar">Cambiar</button>
+    </div>
+
+    <div class="ajustes-opt">
+        <h2>Cambiar contraseña</h2>
+        <input type="password" name="contraseña-actual" id="contraseña-actual-{{current_user.id}}">
+        <input type="password" name="contraseña-nueva" id="contraseña-nueva-{{current_user.id}}">
+        <button class="btn btn-primary btn-config-cambiar" idusuario="{{current_user.id}}">Cambiar</button>
+    </div>
+
+    <div class="ajustes-opt">
+        <h2 class="eliminar-cuenta-h2">Eliminar cuenta</h2>
+        <span>Una vez que eliminas tu cuenta, no hay vuelta atras, debes estar seguro.</span>
+        <button class="btn btn-danger" idusuario="{{current_user.id}}">Eliminar</button>
+    </div>
+</div>
+
+{% endblock %}

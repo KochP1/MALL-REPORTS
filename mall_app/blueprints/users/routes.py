@@ -69,6 +69,11 @@ def regist_admin():
         finally:
             cur.close()
 
+@users.route('ajustes')
+def ajustes():
+    if request.method == 'GET':
+        return render_template('users/ajustes.html')
+
 @users.route('/log_out')
 def log_out():
     logout_user()
