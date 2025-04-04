@@ -107,7 +107,7 @@ body{
     border: 0 !important;
     display: grid !important;
     grid-template-columns: 1fr 3fr 3fr !important;
-    grid-template-rows: 1fr 3fr 6fr !important;
+    grid-template-rows: auto 1fr !important;
     margin: auto !important;
     width: 100vw !important;
     height: 100vh !important;
