@@ -18,7 +18,6 @@ def index():
         contraseña = request.form['password']
         try:
             user = User.get_by_email(db, email)
-
             if user and bcrypt.check_password_hash(user.contraseña, contraseña):
                 login_user(user)
                 print("hash successfull")
@@ -69,7 +68,7 @@ def regist_admin():
         finally:
             cur.close()
 
-@users.route('ajustes')
+@users.route('/ajustes')
 def ajustes():
     if request.method == 'GET':
         return render_template('users/ajustes.html')
@@ -91,6 +90,89 @@ def elim_usuario_mi_usuario(idusuario):
             finally:
                 cur.close()
 
+@users.route('edit_email/<int:id>', methods = ['PATCH'])
+def edit_email(id):
+    db = current_app.config['db']
+    if request.method == 'PATCH':
+        if not id and not request.is_json:
+            return jsonify({'error': 'El cuerpo debe ser JSON'}), 400
+        
+        data = request.get_json()
+
+        required_fields = ['email', 'contraseña']
+        if not all(field in data for field in required_fields):
+            return jsonify({'error': 'Faltan campos requeridos'}), 400
+        
+        try:
+            cur = db.cursor()
+            sql_contraseña = 'SELECT contraseña FROM usuarios WHERE idusuarios = %s'
+            cur.execute(sql_contraseña, id)
+            contraseña = cur.fetchone()
+            contraseña_hash = " ".join(str(elemento) for elemento in contraseña)
+
+            if bcrypt.check_password_hash(contraseña_hash, data['contraseña']):
+                sql_email = 'UPDATE usuarios SET email = %s WHERE idusuarios = %s'
+                data_edit_email = (data['email'], id)
+                cur.execute(sql_email, data_edit_email)
+                db.commit()
+
+                return jsonify({
+                    "success": True,
+                    "message": "Email editado",
+                    "updated_id": id
+                    }), 200
+        except Exception as e:
+            print(e)
+            return jsonify({
+                    "success": False,
+                    "message": "Error al editar email",
+                    "updated_id": id
+                    }), 400
+        finally:
+            cur.close()
+        
+
+@users.route('edit_contraseña/<int:id>', methods = ['PATCH'])
+def edit_contraseña(id):
+    db = current_app.config['db']
+    if request.method == 'PATCH':
+        if not id and not request.is_json:
+            return jsonify({'error': 'El cuerpo debe ser JSON'}), 400
+        
+        data = request.get_json()
+
+        required_fields = ['contraseña-actual', 'contraseña-nueva']
+        if not all(field in data for field in required_fields):
+            return jsonify({'error': 'Faltan campos requeridos'}), 400
+        
+        try:
+            cur = db.cursor()
+            sql_contraseña = 'SELECT contraseña FROM usuarios WHERE idusuarios = %s'
+            cur.execute(sql_contraseña, id)
+            contraseña = cur.fetchone()
+            contraseña_hash = " ".join(str(elemento) for elemento in contraseña)
+
+            if bcrypt.check_password_hash(contraseña_hash, data['contraseña-actual']):
+                hash_contraseña = bcrypt.generate_password_hash(data['contraseña-nueva']).decode('utf-8')
+                sql_contraseña = 'UPDATE usuarios SET contraseña = %s WHERE idusuarios = %s'
+                data_edit_contraseña = (hash_contraseña, id)
+                cur.execute(sql_contraseña, data_edit_contraseña)
+                db.commit()
+
+                return jsonify({
+                    "success": True,
+                    "message": "Contraseña editada",
+                    "updated_id": id
+                    }), 200
+        except Exception as e:
+            print(e)
+            return jsonify({
+                    "success": False,
+                    "message": "Error al editar contraseña",
+                    "updated_id": id
+                    }), 400
+        finally:
+            cur.close()
 
 @users.route('/log_out')
 def log_out():

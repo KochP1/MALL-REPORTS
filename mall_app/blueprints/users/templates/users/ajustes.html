@@ -5,18 +5,26 @@
 {% block content %}
 
 <div class="ajustes-opt__container">
+
+    {% if message %}
+    <div class="alert-danger">
+        {{message}}
+    </div>
+    {% endif %}
+
+
     <div class="ajustes-opt">
         <h2>Cambiar email</h2>
-        <input type="email" value="{{current_user.email}}" name="email" id="email-{{current_user.id}}">
-        <input type="password" name="contraseña-actual" id="contraseña-{{current_user.id}}">
-        <button class="btn btn-primary btn-config-cambiar">Cambiar</button>
+        <input type="email" value="{{current_user.email}}" name="email" id="edit-email-{{current_user.id}}">
+        <input type="password" name="contraseña-actual" id="edit-email-contraseña-{{current_user.id}}">
+        <button class="btn btn-primary btn-config-cambiar" idusuario="{{current_user.id}}" onclick="edit_email(this.getAttribute('idusuario'))">Cambiar</button>
     </div>
 
     <div class="ajustes-opt">
         <h2>Cambiar contraseña</h2>
-        <input type="password" name="contraseña-actual" id="contraseña-actual-{{current_user.id}}">
-        <input type="password" name="contraseña-nueva" id="contraseña-nueva-{{current_user.id}}">
-        <button class="btn btn-primary btn-config-cambiar" idusuario="{{current_user.id}}">Cambiar</button>
+        <input type="password" name="edit-contraseña-actual" id="edit-contraseña-actual-{{current_user.id}}">
+        <input type="password" name="edit-contraseña-nueva" id="edit-contraseña-nueva-{{current_user.id}}">
+        <button class="btn btn-primary btn-config-cambiar" idusuario="{{current_user.id}}" onclick="edit_contraseña(this.getAttribute('idusuario'))">Cambiar</button>
     </div>
 
     <div class="ajustes-opt">

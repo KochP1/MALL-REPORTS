@@ -61,6 +61,59 @@ async function elim_usuario_mi_usuario(idusuarios) {
     }
 }
 
+function edit_email(id) {
+    const email = document.getElementById(`edit-email-${id}`).value;
+    const contraseña = document.getElementById(`edit-email-contraseña-${id}`).value;
+    const url = `/edit_email/${id}`;
+
+    if (email.length > 50) {
+        alert('El email es de máximo 50 caracteres')
+    }
+
+    fetch(url, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({'email': email, 'contraseña': contraseña})
+    }).then(response => {
+        if(response.ok) {
+            window.location.href = "/";
+        } else {
+            alert('Contraseña invalida')
+        }
+    }).catch(error => {
+        console.log(error);
+    })
+}
+
+function edit_contraseña(id) {
+    const contraseñaActual = document.getElementById(`edit-contraseña-actual-${id}`).value;
+    const contraseñaNueva = document.getElementById(`edit-contraseña-nueva-${id}`).value;
+    const url = `edit_contraseña/${id}`;
+
+    if (contraseñaNueva.length > 12) {
+        alert('La contraseña puede ser de máximo 12 caracteres')
+        return false
+    } else {
+        fetch(url, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({'contraseña-actual': contraseñaActual, 'contraseña-nueva': contraseñaNueva})
+        }).then(response => {
+            if (response.ok) {
+                window.location.href = '/'
+            } else {
+                alert('Contraseña invalida')
+            }
+        }).catch(error => {
+            console.error(error)
+        })
+    }
+}
+
 function put_fallas(id) {
     const area = document.getElementById(`edit-area`).value;
     const tipo = document.getElementById(`edit-tipo`).value;
