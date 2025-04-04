@@ -2,7 +2,6 @@ body{
     margin: 0;
     font-family: "Poppins", sans-serif;;
     font-size: 16px;
-    height: 100vh;
 }
 
 *{
@@ -108,7 +107,7 @@ body{
     border: 0 !important;
     display: grid !important;
     grid-template-columns: 1fr 3fr 3fr !important;
-    grid-template-rows: 1fr 3fr 6fr !important;
+    grid-template-rows: 1fr 3fr6fr !important;
     margin: auto !important;
     width: 100vw !important;
     height: 100vh !important;
@@ -227,7 +226,10 @@ body{
 .side-nav{
     grid-area: side-bar;
     background-color: #324768;
+    height: 100%;
 }
+
+
 
 .options__container{
     display: flex;

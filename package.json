@@ -1,0 +1,24 @@
+{
+  "name": "mallreports",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KochP1/MALL-REPORTS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KochP1/MALL-REPORTS/issues"
+  },
+  "homepage": "https://github.com/KochP1/MALL-REPORTS#readme",
+  "description": "",
+  "devDependencies": {
+    "electron": "^35.1.3"
+  }
+}
