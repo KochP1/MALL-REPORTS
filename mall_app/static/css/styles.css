@@ -4,6 +4,10 @@ body{
     font-size: 16px;
 }
 
+body.dark-mode{
+    background-color: #333;
+}
+
 *{
     box-sizing: border-box;
 }
@@ -262,7 +266,6 @@ body{
 @media (max-width:1426px) {
     .side-nav{
         grid-area: none;
-        background-color: #324768;
         display: none;
         
     }
@@ -295,6 +298,10 @@ body{
     gap: 50px;
     border-bottom: 1px solid #333;
 
+}
+
+.opciones-reportes__container.dark-mode{
+    border-bottom: 1px solid #fff;
 }
 
 .nav-options__reportes{
@@ -349,6 +356,10 @@ body{
 
 .table-reportes{
     margin-top: 50px;
+}
+
+.table-dark td, .table-dark tr, .table-dark th{
+    background: transparent !important;
 }
 
 .btn-del-reporte, .btn-edit-reporte{
@@ -475,6 +486,11 @@ body{
     gap: 20px;
 }
 
+.ajustes-opt.dark-mode{
+    border-bottom: 1px solid #fff;
+}
+
+
 .btn-config-cambiar{
     margin-bottom: 10px;
 }
@@ -492,6 +508,21 @@ body{
     width: 270px;
     height: 40px;
 }
+
+.ajustes-opt.dark-mode h2{
+    color: #fff;
+}
+
+.ajustes-opt.dark-mode input{
+    color: #fff;
+    background: transparent;
+    border: 1px solid #fff;
+}
+
+.ajustes-opt.dark-mode span{
+    color: #fff;
+}
+
 
 .eliminar-cuenta-h2{
     color: #dc3545 !important;
