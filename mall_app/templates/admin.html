@@ -46,9 +46,30 @@
                 </div>
             </div>
 
-            <div class="burguer-menu__container">
+            <div class="burguer-menu__container" onclick="showSidebar()">
                 <i class="fa-solid fa-bars"></i>
             </div>
+
+            <ul class="sidebar">
+                <li onclick=hideSidebar()><i class="fa-solid fa-xmark"></i></li>
+                {% if current_user.rol == 'administrador' %}
+                <li class="nav-item"><a href="{{url_for('admin.index')}}" class="nav-link">Reportes</a></li>
+                <li class="nav-item"><a href="{{url_for('admin.tiendas')}}" class="nav-link">Tiendas</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Estadisticas</a></li>
+                {% endif %}
+
+                {% if current_user.rol == 'tienda' %}
+                <li class="nav-item"><a href="{{url_for('tienda.index')}}" class="nav-link">Mis reportes</a></li>
+                {% endif %}
+
+                <li class="nav-item"><a href="{{url_for('users.ajustes')}}" class="nav-link">Ajustes</a></li>
+                <li class="nav-item"><a href="{{url_for('users.log_out')}}" class="nav-link">Cerrar sesióm</a></li>
+                <li class="side-item switch switch__mobile">
+                    <a class="btn nav-boton mr-2" id="darkModeToggle_mobile" role="button">
+                        <i class="fas mb-2 mr-1 fa-moon theme-icon styleIconMobile"></i>
+                    </a>
+                </li>
+            </ul>
     </header>
 
     <nav class="side-nav">
