@@ -107,10 +107,9 @@ body{
     border: 0 !important;
     display: grid !important;
     grid-template-columns: 1fr 3fr 3fr !important;
-    grid-template-rows: auto 1fr !important;
+    grid-template-rows: auto 1fr;
     margin: auto !important;
     width: 100vw !important;
-    height: 100% !important;
     grid-template-areas:
         "side-bar header header"
         "side-bar main main"
@@ -226,8 +225,8 @@ body{
 .side-nav{
     grid-area: side-bar;
     background-color: #324768;
+    height: 100vh !important;
 }
-
 
 
 .options__container{
@@ -267,6 +266,13 @@ body{
         display: none;
         
     }
+}
+
+@media (max-height: 848px) {
+    .side-nav{
+        height: 100% !important;
+    }
+    
 }
 
 /* END ADMIN SIDE-NAV */
