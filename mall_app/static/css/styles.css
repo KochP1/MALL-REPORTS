@@ -199,6 +199,12 @@ body.dark-mode{
     width: max-content;
 }
 
+.burguer-menu__container{
+    display: none;
+    width: max-content;
+    height: max-content;
+}
+
 @media (max-width:1426px) {
     .dashboard-header{
         width: 100vw;
@@ -216,9 +222,14 @@ body.dark-mode{
         margin-left: 15px;
     }
 
-    .user-img__container{
+    .burguer-menu__container{
+        display: block;
         margin-left: auto;
         margin-right: 20px;
+    }
+
+    .user-img__container{
+        display: none;
     }
 }
 
@@ -295,9 +306,20 @@ body.dark-mode{
     display: flex;
     justify-content: end;
     align-items: center;
-    gap: 50px;
     border-bottom: 1px solid #333;
 
+}
+
+@media (max-width: 410px) {
+    .opciones-reportes__container{
+        justify-content: center;
+    }
+}
+
+.nav-list__reportes{
+    height: 100%;
+    display: flex;
+    margin-bottom: 20px;
 }
 
 .opciones-reportes__container.dark-mode{

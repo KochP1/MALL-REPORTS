@@ -6,7 +6,7 @@
         <div class="opciones-reportes__container">
 
             <nav class="nav-reportes">
-                <ul class="nav-list__reportes">
+                <div class="nav-list__reportes">
                     <button class="nav-options__reportes btn btn-primary btn-nueva-falla" data-bs-toggle="modal" data-bs-target="#new-tienda-modal">
                         <span>Nueva tienda</span>
                     </button>
@@ -14,32 +14,35 @@
                     <button class="nav-options__reportes btn btn-primary btn-excel" onclick="migrarExcel()">
                         <span>Migrar a excel</span>
                     </button>
-                </ul>
+                </div>
             </nav>
 
         </div>
-    <table class="table table-striped-columns table-reportes" id="tablaReportes">
-        <tr>
-            <th>ID</th>
-            <th>Tienda</th>
-            <th>Nombre del encargado</th>
-            <th>Apellido del encargado</th>
-        </tr>
 
-        {% for record in tiendas %}
-        <tr>
-            <td id="id-tienda-{{record.idtiendas}}">{{record.idtiendas}}</td>
-            <td id="tienda-{{record.idtiendas}}">{{record.nombre_tienda}}</td>
-            <td id="nombre-{{record.idtiendas}}">{{record.nombre}}</td>
-            <td id="apellido-{{record.idtiendas}}">{{record.apellido}}</td>
-
-            <td class="td-btn"><button id-tiendas="{{record.idtiendas}}" class="btn btn-primary btn-edit-reporte" data-bs-toggle="modal" data-bs-target="#edit-tienda-modal" onclick="editTienda(this.getAttribute('id-tiendas'))">Editar</button>
-            <input type="hidden" value="{{record.idusuarios}}" id="id-user-tienda-{{record.idtiendas}}"></td>
-
-            <td class="td-btn"><button id-tiendas="{{record.idtiendas}}" id-usuarios="{{record.idusuarios}}" class="btn btn-danger btn-del-reporte" onclick="elim_usuario_admins(this.getAttribute('id-usuarios'))">Eliminar</button></td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped-columns table-reportes" id="tablaReportes">
+            <tr>
+                <th>ID</th>
+                <th>Tienda</th>
+                <th>Nombre del encargado</th>
+                <th>Apellido del encargado</th>
+            </tr>
+    
+            {% for record in tiendas %}
+            <tr>
+                <td id="id-tienda-{{record.idtiendas}}">{{record.idtiendas}}</td>
+                <td id="tienda-{{record.idtiendas}}">{{record.nombre_tienda}}</td>
+                <td id="nombre-{{record.idtiendas}}">{{record.nombre}}</td>
+                <td id="apellido-{{record.idtiendas}}">{{record.apellido}}</td>
+    
+                <td class="td-btn"><button id-tiendas="{{record.idtiendas}}" class="btn btn-primary btn-edit-reporte" data-bs-toggle="modal" data-bs-target="#edit-tienda-modal" onclick="editTienda(this.getAttribute('id-tiendas'))">Editar</button>
+                <input type="hidden" value="{{record.idusuarios}}" id="id-user-tienda-{{record.idtiendas}}"></td>
+    
+                <td class="td-btn"><button id-tiendas="{{record.idtiendas}}" id-usuarios="{{record.idusuarios}}" class="btn btn-danger btn-del-reporte" onclick="elim_usuario_admins(this.getAttribute('id-usuarios'))">Eliminar</button></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 
     <div class="modal fade" id="new-tienda-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
