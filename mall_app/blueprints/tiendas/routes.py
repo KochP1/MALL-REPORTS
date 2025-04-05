@@ -8,27 +8,25 @@ bcrypt = Bcrypt()
 @tienda.route('/', methods = ['GET', 'POST'])
 def index():
     db = current_app.config['db']
+    idusuario = (current_user.id,)
+    cur = db.cursor()
+    sql_tienda = 'SELECT * from tiendas t WHERE t.usuarios = %s'
+    cur.execute(sql_tienda, idusuario)
+    tienda = cur.fetchall()
+    insertTienda = []
+    columTiendaNamens = [column[0] for column in cur.description]
+    for record in tienda:
+        insertTienda.append(dict(zip(columTiendaNamens, record)))
+
+    sql_falla = 'SELECT r.idreportes, r.area, r.tipo, r.descripcion, r.fecha, r.estado, t.idtiendas, t.nombre_tienda FROM reportes r JOIN tiendas t ON t.idtiendas = r.tienda WHERE t.usuarios = %s'
+    cur.execute(sql_falla, idusuario)
+    reportes = cur.fetchall()
+    insertReporte= []
+    columNamens = [column[0] for column in cur.description]
+    for record in reportes:
+        insertReporte.append(dict(zip(columNamens, record)))
+    cur.close()
     if request.method == 'GET':
-        cur = db.cursor()
-        idusuario = (current_user.id,)
-
-        sql_tienda = 'SELECT * from tiendas t WHERE t.usuarios = %s'
-        cur.execute(sql_tienda, idusuario)
-        tienda = cur.fetchall()
-        insertTienda = []
-        columTiendaNamens = [column[0] for column in cur.description]
-        for record in tienda:
-            insertTienda.append(dict(zip(columTiendaNamens, record)))
-        print(insertTienda)
-
-        sql_falla = 'SELECT r.idreportes, r.area, r.tipo, r.descripcion, r.fecha, r.estado, t.idtiendas, t.nombre_tienda FROM reportes r JOIN tiendas t ON t.idtiendas = r.tienda WHERE t.usuarios = %s'
-        cur.execute(sql_falla, idusuario)
-        reportes = cur.fetchall()
-        insertReporte= []
-        columNamens = [column[0] for column in cur.description]
-        for record in reportes:
-            insertReporte.append(dict(zip(columNamens, record)))
-        cur.close()
         return render_template('tiendas/index.html', fallas = insertReporte, tienda = insertTienda)
     
     if request.method == 'POST':
@@ -40,7 +38,10 @@ def index():
         estado = 'no resuelta'
 
         if len(descripcion) > 100:
-            return redirect(url_for('admin.index'))
+            return render_template('tiendas/index.html', tienda = insertTienda, fallas = insertReporte, message = 'La descripcion es muy larga (max 100 caracteres)')
+        
+        if area == "Selecciona un area" or tipo == "Selecciona un tipo" or fecha == "":
+            return render_template('tiendas/index.html', tienda = insertTienda, fallas = insertReporte, message = 'Todos los campos son obligatorios')
 
         try:
             cur = db.cursor()

@@ -144,18 +144,27 @@ body.dark-mode{
 }
 .user-img__container{
     background-color: red;
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     border-radius: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.5rem;
     font-weight: 600;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     position: relative;
     cursor: pointer;
 }
 
+/* Estilo alternativo cuando no hay imagen */
+.user-img__container:not([style*="background-image"]) {
+    background-color: red;
+    width: 40px;
+    height: 40px;
+}
 
 .drop-down-menu{
     background-color: #fff;
@@ -327,6 +336,29 @@ body.dark-mode{
 /* ADMIN MAIN-SECTION */
 .main-section{
     grid-area: main;
+}
+
+.modal-content.dark-mode{
+    background-color: #333 !important;
+    color: #fff;
+}
+
+.modal-content.dark-mode .modal-header button{
+    filter: invert(1) brightness(2); /* Blanco (valor por defecto) */
+}
+
+.modal-content.dark-mode input, .modal-content.dark-mode textarea, .modal-content.dark-mode select{
+    background: transparent !important;
+    color: #fff !important;
+}
+
+.modal-content.dark-mode .new-tienda-input__container input{
+    border-color: #fff;
+}
+
+.modal-content.dark-mode .new-tienda-input__container input:focus{
+    border-color: #fff;
+    box-shadow: 0px 0px 5px 0px #fff;
 }
 
 /* REPORTES Y TIENDAS */
@@ -646,6 +678,11 @@ body.dark-mode{
 
 .tienda-card.dark-mode .tienda-card-footer button {
     color: #fff;
+}
+
+.tienda-card.dark-mode .tienda-card-body textarea {
+    color: #fff;
+    background-color: #474545;
 }
 
 .side-line-decorator{

@@ -37,6 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const tiendaCard = document.querySelectorAll(".tienda-card");
         tiendaCard.forEach(card => card.classList.add("dark-mode"));
 
+        const modal = document.querySelectorAll(".modal-content");
+        modal.forEach(modal => modal.classList.add("dark-mode"));
+
 
     }
 
@@ -58,6 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const tiendaCard = document.querySelectorAll(".tienda-card");
         tiendaCard.forEach(card => card.classList.remove("dark-mode"));
+
+        const modal = document.querySelectorAll(".modal-content");
+        modal.forEach(modal => modal.classList.remove("dark-mode"));
 
     }
 });

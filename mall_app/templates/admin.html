@@ -24,14 +24,27 @@
             </div>
         </div>
 
+        {% if current_user.rol == 'administrador' %}
         <a href="{{url_for('admin.index')}}">
             <div class=" mobile-logo">
                 <img src="../img/inmigracion.png" alt="Mall reports" class="logo" width="60px" height="60px">
             </div>
         </a>
+        {% endif %}
 
-            <div class="user-img__container" id="toggle-menu">
+        {% if current_user.rol == 'tienda' %}
+        <a href="{{url_for('tienda.index')}}">
+            <div class=" mobile-logo">
+                <img src="../img/inmigracion.png" alt="Mall reports" class="logo" width="60px" height="60px">
+            </div>
+        </a>
+        {% endif %}
+
+            <div class="user-img__container" id="toggle-menu"
+            style="{% if current_user.imagen %}background-image: url('{{ url_for('users.profile_image', user_id=current_user.id) }}'); {% endif %}">
+                {% if current_user.imagen == None %}
                 <span>{{current_user.nombre[0]}}</span>
+                {% endif %}
     
                 <div class="drop-down-menu" id="drop-down">
                     <ul class="user-menu__list">
@@ -39,7 +52,7 @@
                             <a href="{{url_for('users.log_out')}}">Cerrar sesión</a>
                         </li>
     
-                        <li class="user-menu__item">
+                        <li class="user-menu__item" data-bs-toggle="modal" data-bs-target="#edit-image-modal">
                             <a href="#">Editar imágen</a>
                         </li>
                     </ul>
@@ -73,11 +86,23 @@
     </header>
 
     <nav class="side-nav">
+
+        {% if current_user.rol == 'administrador' %}
         <a href="{{url_for('admin.index')}}">
             <div class="logo__container">
                 <img src="../img/inmigracion.png" alt="Mall reports" class="logo" width="60px" height="60px">
             </div>
         </a>
+        {% endif %}
+
+        {% if current_user.rol == 'tienda' %}
+        <a href="{{url_for('tienda.index')}}">
+            <div class="logo__container">
+                <img src="../img/inmigracion.png" alt="Mall reports" class="logo" width="60px" height="60px">
+            </div>
+        </a>
+        {% endif %}
+
 
         <div class="options__container">
 
@@ -131,6 +156,26 @@
 
         {% endblock %}
     </section>
+
+    <div class="modal fade" id="edit-image-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Subir foto de perfil</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="{{url_for('users.edit_user_image')}}" method="post" enctype="multipart/form-data">
+
+                <label>Subir imágen</label>
+                <input class="form-control mb-3" type="file" name="foto" accept="image/*">
+    
+                <button type="submit" class="btn btn-primary w-100 btn-fechas">Guardar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="../js/script.js"></script>

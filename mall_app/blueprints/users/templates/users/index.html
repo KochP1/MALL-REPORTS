@@ -2,7 +2,14 @@
 
 {% block title %} Iniciar sesión {% endblock %}
 
-{% block content%}
+{% block content %}
+
+    {% if message %}
+    <div class="alert alert-danger">
+        <span>{{message}}</span>
+    </div>
+    {% endif %}
+
     <section class="login-section">
         <form action="" class="login-form" method="post">
             <div class="input-container">

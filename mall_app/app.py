@@ -5,8 +5,6 @@ from os import getenv
 from dotenv import load_dotenv
 
 
-
-
 def create_app():
     app = Flask(__name__, template_folder='templates', static_folder='static', static_url_path='/')
 
@@ -15,6 +13,11 @@ def create_app():
     app.config['DB_USER'] = getenv('DB_USER')
     app.config['DB_PASSWORD'] = getenv('DB_PASSWORD')
     app.config['DB_NAME'] = getenv('DB_NAME')
+
+    # Configuración para uploads
+    app.config['UPLOAD_FOLDER'] = 'static/uploads'
+    app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
+    app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
     app.secret_key = app.config['SECRET_KEY']
 
@@ -28,7 +31,6 @@ def create_app():
 
     try:
         with db.cursor() as cursor:
-            # Ejecutar una consulta sencilla para comprobar la conexión
             cursor.execute("SELECT 1")
             result = cursor.fetchone()
             if result:

@@ -2,13 +2,14 @@ from flask import render_template, request, redirect, url_for
 from flask_login import UserMixin
 
 class User(UserMixin):
-    def __init__(self, id, nombre, apellido, contraseña, email, rol):
+    def __init__(self, id, nombre, apellido, contraseña, email, rol, imagen):
         self.id = id
         self.nombre = nombre
         self.apellido = apellido
         self.email = email
         self.contraseña = contraseña
         self.rol = rol
+        self.imagen = imagen
 
     @staticmethod
     def get_by_id(db, user_id):
@@ -18,14 +19,15 @@ class User(UserMixin):
         user_data = cur.fetchone()
         cur.close()
         if user_data:
-            return User(
-                id=user_data[0],
-                nombre=user_data[1],
-                apellido=user_data[2],
-                email=user_data[3],
-                contraseña = user_data[4],
-                rol = user_data[5]
-            )
+                return User(
+                    id=user_data[0],
+                    nombre=user_data[1],
+                    apellido=user_data[2],
+                    email=user_data[3],
+                    contraseña = user_data[4],
+                    rol = user_data[5],
+                    imagen = user_data[6]
+                )
         return None
     
     @staticmethod
@@ -36,12 +38,13 @@ class User(UserMixin):
         user_data = cur.fetchone()
         cur.close()
         if user_data:
-            return User(
-                id=user_data[0],
-                nombre=user_data[1],
-                apellido=user_data[2],
-                email=user_data[3],
-                contraseña = user_data[4],
-                rol = user_data[5],
-            )
+                return User(
+                    id=user_data[0],
+                    nombre=user_data[1],
+                    apellido=user_data[2],
+                    email=user_data[3],
+                    contraseña = user_data[4],
+                    rol = user_data[5],
+                    imagen = user_data[6]
+                )
         return None

@@ -19,6 +19,12 @@
 
         </div>
 
+    {% if message  %}
+        <div class="alert alert-danger">
+            <span>{{message}}</span>
+        </div>
+    {% endif %}
+
     <div class="table-responsive">
         <table class="table table-striped-columns table-reportes" id="tablaReportes">
             <tr>
