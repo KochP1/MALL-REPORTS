@@ -30,7 +30,7 @@ function excel() {
     const reportes = document.getElementById('tablaReportes');
     let tableExport = new TableExport(reportes, {
         exportButtons: false,
-        filename: "ReportesMarzo",
+        //filename: "ReportesMarzo",
         sheetname: "Tabla",
     });
 
@@ -45,8 +45,7 @@ function excel() {
             pref.RTL,
             pref.sheetname
         );
-
-    window.location.href = '/admin/';
+    window.location.reload();
 }
 
 function migrarExcel() {
@@ -59,3 +58,4 @@ function migrarExcel() {
 
     excel()
 }
+

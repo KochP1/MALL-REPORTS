@@ -110,7 +110,7 @@ body{
     grid-template-rows: auto 1fr !important;
     margin: auto !important;
     width: 100vw !important;
-    height: 100vh !important;
+    height: 100% !important;
     grid-template-areas:
         "side-bar header header"
         "side-bar main main"
@@ -226,7 +226,6 @@ body{
 .side-nav{
     grid-area: side-bar;
     background-color: #324768;
-    height: 100%;
 }
 
 
