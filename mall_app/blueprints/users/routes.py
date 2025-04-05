@@ -1,6 +1,8 @@
-from flask import request, render_template, redirect, url_for, Blueprint, current_app, jsonify
+from flask import request, render_template, redirect, url_for, Blueprint, current_app, jsonify, Response, send_from_directory
 from flask_login import login_user, logout_user, current_user
-from flask_bcrypt import Bcrypt, generate_password_hash
+from flask_bcrypt import Bcrypt
+from werkzeug.utils import secure_filename
+import os
 
 from .model import User
 
@@ -173,6 +175,62 @@ def edit_contraseña(id):
                     }), 400
         finally:
             cur.close()
+
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
+
+@users.route('/profile_image/<int:user_id>')
+def profile_image(user_id):
+    cur = current_app.config['db'].cursor()
+    cur.execute('SELECT imagen FROM usuarios WHERE idusuarios = %s', (user_id,))
+    image_data = cur.fetchone()[0]
+    cur.close()
+    
+    if not image_data:
+        return send_from_directory('static', 'default-profile.png')
+    
+    # Determinar el tipo MIME basado en los primeros bytes
+    mime_type = 'image/jpeg'
+    if image_data.startswith(b'\x89PNG'):
+        mime_type = 'image/png'
+    elif image_data.startswith(b'\xff\xd8'):
+        mime_type = 'image/jpeg'
+    
+    return Response(image_data, mimetype=mime_type)
+
+@users.route('/edit_user_image', methods=['POST'])
+def edit_user_image():
+    db = current_app.config['db']
+    
+    if 'foto' not in request.files:
+        return "No se encontró archivo", 400
+    
+    file = request.files['foto']
+    if file.filename == '':
+        return "Nombre de archivo vacío", 400
+    
+    if file and allowed_file(file.filename):
+        try:
+            # Leer el archivo como binario
+            image_data = file.read()
+            
+            # Validar tamaño máximo (ej: 4MB)
+            if len(image_data) > 4 * 1024 * 1024:
+                return "La imagen es demasiado grande (máx 4MB)", 400
+            
+            # Actualizar base de datos
+            cur = db.cursor()
+            sql = 'UPDATE usuarios SET imagen = %s WHERE idusuarios = %s'
+            cur.execute(sql, (image_data, current_user.id))
+            db.commit()
+            cur.close()
+            
+            return redirect(url_for('users.ajustes'))
+        except Exception as e:
+            return f"Error al guardar imagen: {str(e)}", 500
+    
+    return "Tipo de archivo no permitido", 400
 
 @users.route('/log_out')
 def log_out():

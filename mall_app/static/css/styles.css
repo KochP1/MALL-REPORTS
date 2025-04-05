@@ -144,18 +144,27 @@ body.dark-mode{
 }
 .user-img__container{
     background-color: red;
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     border-radius: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.5rem;
     font-weight: 600;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     position: relative;
     cursor: pointer;
 }
 
+/* Estilo alternativo cuando no hay imagen */
+.user-img__container:not([style*="background-image"]) {
+    background-color: red;
+    width: 40px;
+    height: 40px;
+}
 
 .drop-down-menu{
     background-color: #fff;
@@ -646,6 +655,11 @@ body.dark-mode{
 
 .tienda-card.dark-mode .tienda-card-footer button {
     color: #fff;
+}
+
+.tienda-card.dark-mode .tienda-card-body textarea {
+    color: #fff;
+    background-color: #474545;
 }
 
 .side-line-decorator{
