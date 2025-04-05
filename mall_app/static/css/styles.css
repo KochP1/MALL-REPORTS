@@ -352,6 +352,10 @@ body.dark-mode{
     color: #fff !important;
 }
 
+.modal-content.dark-mode option {
+    background-color: #333 !important;
+}
+
 .modal-content.dark-mode .new-tienda-input__container input{
     border-color: #fff;
 }
