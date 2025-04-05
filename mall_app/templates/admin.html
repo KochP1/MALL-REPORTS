@@ -45,6 +45,31 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="burguer-menu__container" onclick="showSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+            <ul class="sidebar">
+                <li onclick=hideSidebar()><i class="fa-solid fa-xmark"></i></li>
+                {% if current_user.rol == 'administrador' %}
+                <li class="nav-item"><a href="{{url_for('admin.index')}}" class="nav-link">Reportes</a></li>
+                <li class="nav-item"><a href="{{url_for('admin.tiendas')}}" class="nav-link">Tiendas</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Estadisticas</a></li>
+                {% endif %}
+
+                {% if current_user.rol == 'tienda' %}
+                <li class="nav-item"><a href="{{url_for('tienda.index')}}" class="nav-link">Mis reportes</a></li>
+                {% endif %}
+
+                <li class="nav-item"><a href="{{url_for('users.ajustes')}}" class="nav-link">Ajustes</a></li>
+                <li class="nav-item"><a href="{{url_for('users.log_out')}}" class="nav-link">Cerrar sesióm</a></li>
+                <li class="side-item switch switch__mobile">
+                    <a class="btn nav-boton mr-2" id="darkModeToggle_mobile" role="button">
+                        <i class="fas mb-2 mr-1 fa-moon theme-icon styleIconMobile"></i>
+                    </a>
+                </li>
+            </ul>
     </header>
 
     <nav class="side-nav">
@@ -85,8 +110,8 @@
             {% endif %}
 
             <div class="option">
-                <a href="#" class="nav-bar__link">
-                    <i class="fa-solid fa-moon"></i>
+                <a href="#" class="nav-bar__link" id="darkModeToggle">
+                    <i class="fa-solid fa-moon styleIcon" id="styleIcon"></i>
                     <span>Apariencia</span>
                 </a>
             </div>
@@ -109,5 +134,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="../js/script.js"></script>
+    <script src="../js/darkMode.js"></script>
 </body>
 </html>

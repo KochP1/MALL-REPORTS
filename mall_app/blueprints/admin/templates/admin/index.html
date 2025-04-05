@@ -6,7 +6,7 @@
         <div class="opciones-reportes__container">
 
             <nav class="nav-reportes">
-                <ul class="nav-list__reportes">
+                <div class="nav-list__reportes">
                     <button class="nav-options__reportes btn btn-primary btn-nueva-falla" data-bs-toggle="modal" data-bs-target="#falla-modal">
                         <span>Nueva falla</span>
                     </button>
@@ -18,11 +18,12 @@
                     <button class="nav-options__reportes btn btn-primary btn-filtrar-falla" data-bs-toggle="modal" data-bs-target="#fecha-modal">
                         <span>Filtrar fecha</span>
                     </button>
-                </ul>
+                  </div>
             </nav>
 
         </div>
-    <table class="table table-striped-columns table-reportes" id="tablaReportes">
+    <div class="table-responsive">
+      <table class="table table-striped-columns table-reportes" id="tablaReportes">
         <tr>
             <th>ID</th>
             <th>Tienda</th>
@@ -48,6 +49,7 @@
         </tr>
         {% endfor %}
     </table>
+    </div>
 
     <div class="modal fade" id="falla-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
