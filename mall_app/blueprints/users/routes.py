@@ -235,6 +235,11 @@ def edit_user_image():
     
     return "Tipo de archivo no permitido", 400
 
+@users.route('/olvidar_contraseña', methods = ['GET', 'POST'])
+def olvidar_contraseña():
+    if request.method == 'GET':
+        return render_template('users/recuperar.html')
+
 @users.route('/log_out')
 def log_out():
     logout_user()

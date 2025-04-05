@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} Iniciar sesión {% endblock %}
+{% block title %} Recuperar cuenta {% endblock %}
 
 {% block content %}
 
@@ -17,15 +17,9 @@
                 <input type="email" placeholder="example@gmail.com" id="email" name="email">
             </div>
 
-            <div class="input-container">
-                <label for="password">Contraseña</label>
-                <input type="password" id="password" name="password">
-            </div>
-
-            <button class="btn btn-primary">Iniciar sesión</button>
+            <button class="btn btn-primary">Enviar</button>
             <div class="login-form__links">
-                <a href="{{url_for('users.regist_admin')}}">¿No tienes una cuenta?</a>
-                <a href="{{url_for('users.olvidar_contraseña')}}">¿Olvidates tu contraseña?</a>
+                <a href="{{url_for('users.index')}}">¿Regresar?</a>
             </div>
         </form>
     </section>
