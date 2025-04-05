@@ -8,25 +8,25 @@ bcrypt = Bcrypt()
 @admin.route('/', methods = ['GET', 'POST'])
 def index():
     db = current_app.config['db']
+    cur = db.cursor()
+    cur.execute('SELECT idtiendas, nombre_tienda FROM tiendas')
+    data = cur.fetchall()
+    insertTienda = []
+    columNamnes = [column[0] for column in cur.description]
+    for record in data:
+        insertTienda.append(dict(zip(columNamnes, record)))
+    print(f'Tiendas: {insertTienda}')
+
+    cur.execute('SELECT r.idreportes, t.nombre_tienda, r.area, r.tipo, r.descripcion, r.fecha, r.estado FROM reportes r JOIN tiendas t ON r.tienda = t.idtiendas')
+    data_reportes = cur.fetchall()
+    insertReportes = []
+    columNamnesReportes = [column[0] for column in cur.description]
+    for record in data_reportes:
+        insertReportes.append(dict(zip(columNamnesReportes, record)))
+    print(f'Reportes: {insertReportes}')
+
+    cur.close()
     if request.method == 'GET':
-        cur = db.cursor()
-        cur.execute('SELECT idtiendas, nombre_tienda FROM tiendas')
-        data = cur.fetchall()
-        insertTienda = []
-        columNamnes = [column[0] for column in cur.description]
-        for record in data:
-            insertTienda.append(dict(zip(columNamnes, record)))
-        print(f'Tiendas: {insertTienda}')
-
-        cur.execute('SELECT r.idreportes, t.nombre_tienda, r.area, r.tipo, r.descripcion, r.fecha, r.estado FROM reportes r JOIN tiendas t ON r.tienda = t.idtiendas')
-        data_reportes = cur.fetchall()
-        insertReportes = []
-        columNamnesReportes = [column[0] for column in cur.description]
-        for record in data_reportes:
-            insertReportes.append(dict(zip(columNamnesReportes, record)))
-        print(f'Reportes: {insertReportes}')
-
-        cur.close()
         return render_template('admin/index.html', tiendas = insertTienda, reportes = insertReportes)
     
     if request.method == 'POST':
@@ -40,7 +40,10 @@ def index():
         print(type(fecha))
 
         if len(descripcion) > 100:
-            return redirect(url_for('admin.index'))
+            return render_template('admin/index.html', tiendas = insertTienda, reportes = insertReportes, message = 'La descripcion es muy larga (max 100 caracteres)')
+        
+        if tienda == "Selecciona una tienda" or area == "Selecciona un area" or tipo == "Selecciona un tipo" or fecha == "":
+            return render_template('admin/index.html', tiendas = insertTienda, reportes = insertReportes, message = 'Todos los campos son obligatorios')
 
         try:
             cur = db.cursor()
@@ -61,7 +64,7 @@ def filtrar_reportes():
     fecha_fin = request.form['fecha_fin' ]
 
     if not fecha_inicio or not fecha_fin:
-        return "Fechas no proporcionadas", 400
+        return redirect(url_for('admin.index'))
     
     try:
         cur = db.cursor()
@@ -146,19 +149,17 @@ def edit_reorte(idreportes):
 @admin.route('/tiendas', methods = ['GET', 'POST'])
 def tiendas():
     db = current_app.config['db']
+    cur = db.cursor()
+
+    cur.execute('SELECT t.idtiendas, t.nombre_tienda, u.idusuarios, u.nombre, u.apellido FROM tiendas t JOIN usuarios u ON t.usuarios = u.idusuarios')
+    data = cur.fetchall()
+    cur.close()
+    insertTienda = []
+    columNamnes = [column[0] for column in cur.description]
+    for record in data:
+        insertTienda.append(dict(zip(columNamnes, record)))
 
     if request.method == 'GET':
-        cur = db.cursor()
-
-        cur.execute('SELECT t.idtiendas, t.nombre_tienda, u.idusuarios, u.nombre, u.apellido FROM tiendas t JOIN usuarios u ON t.usuarios = u.idusuarios')
-        data = cur.fetchall()
-        cur.close()
-        insertTienda = []
-        columNamnes = [column[0] for column in cur.description]
-        for record in data:
-            insertTienda.append(dict(zip(columNamnes, record)))
-        
-        print(insertTienda)
         return render_template('admin/tiendas.html', tiendas = insertTienda)
     
     if request.method == 'POST':
@@ -172,15 +173,15 @@ def tiendas():
         hash_contraseña = bcrypt.generate_password_hash(contraseña).decode('utf-8')
 
         if len(nombreTienda) > 30:
-            return redirect(url_for('admin.index'))
+            return render_template('admin/tiendas.html', tiendas = insertTienda, message = 'Nombre de la tienda muy largo (max 30 caracteres)')
         elif len(nombreEncargado) > 20:
-            return redirect(url_for('admin.index'))
+            return render_template('admin/tiendas.html', tiendas = insertTienda, message = 'Nombre del encargado muy largo (max 20 caracteres)')
         elif len(apellidoEncargado) > 20:
-            return redirect(url_for('admin.index'))
+            return render_template('admin/tiendas.html', tiendas = insertTienda, message = 'Apellido del encargado muy largo (max 20 caracteres)')
         elif len(email) > 50:
-            return redirect(url_for('admin.index'))
+            return render_template('admin/tiendas.html', tiendas = insertTienda, message = 'Email de la tienda muy largo (max 50 caracteres)')
         elif len(contraseña) > 12:
-            return redirect(url_for('admin.index'))
+            return render_template('admin/tiendas.html', tiendas = insertTienda, message = 'Contraseña de la tienda muy larga (max 12 caracteres)')
 
         try:
             cur = db.cursor()

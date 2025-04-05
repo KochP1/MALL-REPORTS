@@ -46,16 +46,19 @@ def regist_admin():
         email = request.form['email']
         contraseña = request.form['password']
         rol = "administrador"
-        hash_contraseña = bcrypt.generate_password_hash(contraseña).decode('utf-8')
-
+        
         if len(nombre) > 20:
-            return redirect(url_for('admin.index'))
+            return render_template('users/regist.html', message = 'Nombre muy largo (max 20 caracteres)')
         elif len(apellido) > 20:
-            return redirect(url_for('admin.index'))
+            return render_template('users/regist.html', message = 'Apellido muy largo (max 20 caracteres)')
         elif len(email) > 50:
-            return redirect(url_for('admin.index'))
+            return render_template('users/regist.html', message = 'Email muy largo (max 50 caracteres)')
         elif len(contraseña) > 12:
-            return redirect(url_for('admin.index'))
+            return render_template('users/regist.html', message = 'Contraseña muy largo (max 20 caracteres)')
+        elif nombre == "" or apellido == "" or email == "" or contraseña == "":
+            return render_template('users/regist.html', message = 'Todos los campos son obligatorios')
+        
+        hash_contraseña = bcrypt.generate_password_hash(contraseña).decode('utf-8')
 
         try:
             cur = db.cursor()

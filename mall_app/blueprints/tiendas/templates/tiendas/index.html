@@ -15,8 +15,13 @@
 
 </div>
 
-<div class="tiendas-grid-wrapper">
+{% if message  %}
+    <div class="alert alert-danger">
+        <span>{{message}}</span>
+    </div>
+{% endif %}
 
+<div class="tiendas-grid-wrapper">
     {% for falla in fallas %}
     {% if falla.estado == 'no resuelta' %}
     <div class="tienda-card">

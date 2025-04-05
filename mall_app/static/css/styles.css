@@ -338,6 +338,29 @@ body.dark-mode{
     grid-area: main;
 }
 
+.modal-content.dark-mode{
+    background-color: #333 !important;
+    color: #fff;
+}
+
+.modal-content.dark-mode .modal-header button{
+    filter: invert(1) brightness(2); /* Blanco (valor por defecto) */
+}
+
+.modal-content.dark-mode input, .modal-content.dark-mode textarea, .modal-content.dark-mode select{
+    background: transparent !important;
+    color: #fff !important;
+}
+
+.modal-content.dark-mode .new-tienda-input__container input{
+    border-color: #fff;
+}
+
+.modal-content.dark-mode .new-tienda-input__container input:focus{
+    border-color: #fff;
+    box-shadow: 0px 0px 5px 0px #fff;
+}
+
 /* REPORTES Y TIENDAS */
 
 .opciones-reportes__container{
