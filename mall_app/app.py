@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_login import LoginManager
 import pymysql
+from flask_mail import Mail
 from os import getenv
-from dotenv import load_dotenv
 
 
 def create_app():
@@ -18,6 +18,18 @@ def create_app():
     app.config['UPLOAD_FOLDER'] = 'static/uploads'
     app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
+    # Servidor de correo
+
+    app.config['MAIL_SERVER'] = getenv('MAIL_SERVER')
+    app.config['MAIL_PORT'] = getenv('MAIL_PORT')
+    app.config['MAIL_USE_TLS'] = getenv('MAIL_USE_TLS')
+    app.config['MAIL_USERNAME'] = getenv('MAIL_USERNAME')
+    app.config['MAIL_PASSWORD'] = getenv('MAIL_PASSWORD')
+    app.config['MAIL_DEFAULT_SENDER'] = getenv('MAIL_DEFAULT_SENDER')
+    app.config['MAIL_USE_SSL'] = getenv('MAIL_USE_SSL')
+
+    app.config['mail']  = Mail(app)
 
     app.secret_key = app.config['SECRET_KEY']
 

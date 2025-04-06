@@ -15,7 +15,6 @@ def index():
     columNamnes = [column[0] for column in cur.description]
     for record in data:
         insertTienda.append(dict(zip(columNamnes, record)))
-    print(f'Tiendas: {insertTienda}')
 
     cur.execute('SELECT r.idreportes, t.nombre_tienda, r.area, r.tipo, r.descripcion, r.fecha, r.estado FROM reportes r JOIN tiendas t ON r.tienda = t.idtiendas')
     data_reportes = cur.fetchall()
@@ -23,7 +22,6 @@ def index():
     columNamnesReportes = [column[0] for column in cur.description]
     for record in data_reportes:
         insertReportes.append(dict(zip(columNamnesReportes, record)))
-    print(f'Reportes: {insertReportes}')
 
     cur.close()
     if request.method == 'GET':
@@ -36,8 +34,6 @@ def index():
         descripcion = request.form['descripcion']
         fecha = request.form['fecha']
         estado = 'no resuelta'
-        print(tienda)
-        print(type(fecha))
 
         if len(descripcion) > 100:
             return render_template('admin/index.html', tiendas = insertTienda, reportes = insertReportes, message = 'La descripcion es muy larga (max 100 caracteres)')

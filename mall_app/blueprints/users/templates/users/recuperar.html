@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %} Recuperar cuenta {% endblock %}
+
+{% block content %}
+    
+    {% if message_good %}
+    <div class="alert alert-success">
+        <span>{{message_good}}</span>
+    </div>
+    {% endif %}
+
+    {% if message %}
+    <div class="alert alert-danger">
+        <span>{{message}}</span>
+    </div>
+    {% endif %}
+
+    <section class="login-section">
+        <form action="{{url_for('users.olvidar_contraseña')}}" class="login-form" method="post">
+            <div class="input-container">
+                <label for="email">Email</label>
+                <input type="email" placeholder="example@gmail.com" id="email" name="email">
+            </div>
+
+            <button class="btn btn-primary">Enviar</button>
+            <div class="login-form__links">
+                <a href="{{url_for('users.index')}}">¿Regresar?</a>
+            </div>
+        </form>
+    </section>
+{% endblock %}

@@ -2,12 +2,18 @@ from flask import request, render_template, redirect, url_for, Blueprint, curren
 from flask_login import login_user, logout_user, current_user
 from flask_bcrypt import Bcrypt
 from werkzeug.utils import secure_filename
+import random
+from itsdangerous import URLSafeTimedSerializer
+from datetime import datetime, timedelta
+from flask_mail import Mail, Message
+
 import os
 
 from .model import User
 
 users = Blueprint('users', __name__, template_folder='templates', static_folder="static")
 bcrypt = Bcrypt()
+serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
 
 @users.route('/', methods = ['GET', 'POST'])
 def index():
@@ -22,7 +28,6 @@ def index():
             user = User.get_by_email(db, email)
             if user and bcrypt.check_password_hash(user.contraseña, contraseña):
                 login_user(user)
-                print("hash successfull")
 
                 if user.rol == 'administrador':
                     return redirect(url_for('admin.index'))
@@ -234,6 +239,101 @@ def edit_user_image():
             return f"Error al guardar imagen: {str(e)}", 500
     
     return "Tipo de archivo no permitido", 400
+
+
+def generar_codigo_verificacion(usuario_id):
+    """
+    Genera un código de 6 dígitos y lo guarda en la base de datos con expiración.
+    
+    Args:
+        usuario_id (int): ID del usuario que solicita el restablecimiento.
+    
+    Returns:
+        str: Código generado (ej: "123456").
+    """
+    db = current_app.config['db']
+
+    # 1. Generar código aleatorio de 6 dígitos
+    codigo = str(random.randint(100000, 999999))
+    
+    # 2. Calcular fecha de expiración (15 minutos desde ahora)
+    expiracion = datetime.now() + timedelta(minutes=15)
+    
+    # 3. Guardar en la base de datos
+    try:
+        # Primero invalidar códigos previos del usuario
+        db.execute(
+            "UPDATE codigos_verificacion SET usado = TRUE WHERE usuario_id = %s",
+            (usuario_id,)
+        )
+        
+        # Insertar nuevo código
+        db.execute(
+            """INSERT INTO codigos_verificacion 
+               (usuario_id, codigo, expiracion) 
+               VALUES (%s, %s, %s)""",
+            (usuario_id, codigo, expiracion)
+        )
+        db.commit()
+        
+        return codigo
+    except Exception as e:
+        db.rollback()
+        current_app.logger.error(f"Error al guardar código: {str(e)}")
+        raise  # Relanza la excepción para manejo superior
+
+def enviar_codigo(email):
+    try:
+        msg = Message(
+            'Prueba de correo',  # Asunto
+            sender=current_app.config['MAIL_DEFAULT_SENDER'],
+            recipients=[email]
+        )
+        msg.body = 'Este es un correo de prueba'
+        
+        mail = current_app.config['mail']
+        mail.send(msg)
+        print("Correo enviado exitosamente!")
+        return redirect(url_for('users.recover_2fa'))
+    except Exception as e:
+        print(f"Error al enviar correo: {str(e)}")
+        return False
+
+@users.route('/olvidar_contraseña', methods = ['GET', 'POST'])
+def olvidar_contraseña():
+    if request.method == 'GET':
+        return render_template('users/recuperar.html')
+    
+    if request.method == 'POST':
+        email = request.form['email']
+        db = current_app.config['db']
+        user = User.get_by_email(db, email)
+        if user != None:
+                try:
+                    msg = Message(
+                    'Prueba de correo',  # Asunto
+                    sender=current_app.config['MAIL_DEFAULT_SENDER'],
+                    recipients=[email]
+                    )
+                    msg.body = 'Este es un correo de prueba'
+        
+                    mail = current_app.config['mail']
+                    mail.send(msg)
+                    print("Correo enviado exitosamente!")
+                    return redirect(url_for('users.recover_2fa'))
+                except Exception as e:
+                    print(f"Error al enviar correo: {str(e)}")
+                    return ""
+        return render_template("users/recuperar.html", message = 'El email no existe')
+
+@users.route('/recover_2fa', methods = ['GET', 'POST'])
+def recover_2fa():
+    if request.method == 'GET':
+        return render_template('users/2fa.html')
+    if request.method == 'POST':
+        #token = serializer.dumps(email, salt='reset-password')
+        #reset_url = url_for('recovery', token=token, _external=True)
+        return None
 
 @users.route('/log_out')
 def log_out():
