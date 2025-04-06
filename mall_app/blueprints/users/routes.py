@@ -13,7 +13,6 @@ from .model import User
 
 users = Blueprint('users', __name__, template_folder='templates', static_folder="static")
 bcrypt = Bcrypt()
-mail = current_app.config['mail']
 serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
 
 @users.route('/', methods = ['GET', 'POST'])
@@ -311,9 +310,20 @@ def olvidar_contraseña():
         user = User.get_by_email(db, email)
         if user != None:
                 try:
-                    enviar_codigo(email)
+                    msg = Message(
+                    'Prueba de correo',  # Asunto
+                    sender=current_app.config['MAIL_DEFAULT_SENDER'],
+                    recipients=[email]
+                    )
+                    msg.body = 'Este es un correo de prueba'
+        
+                    mail = current_app.config['mail']
+                    mail.send(msg)
+                    print("Correo enviado exitosamente!")
+                    return redirect(url_for('users.recover_2fa'))
                 except Exception as e:
-                    print(e)
+                    print(f"Error al enviar correo: {str(e)}")
+                    return ""
         return render_template("users/recuperar.html", message = 'El email no existe')
 
 @users.route('/recover_2fa', methods = ['GET', 'POST'])

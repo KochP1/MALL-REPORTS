@@ -29,9 +29,7 @@ def create_app():
     app.config['MAIL_DEFAULT_SENDER'] = getenv('MAIL_DEFAULT_SENDER')
     app.config['MAIL_USE_SSL'] = getenv('MAIL_USE_SSL')
 
-    mail = Mail()
-
-    app.config['mail'] = mail.init_app(app)
+    app.config['mail']  = Mail(app)
 
     app.secret_key = app.config['SECRET_KEY']
 
