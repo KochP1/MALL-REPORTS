@@ -3,12 +3,6 @@
 {% block title %} Recuperar cuenta {% endblock %}
 
 {% block content %}
-    
-    {% if message_good %}
-    <div class="alert alert-success">
-        <span>{{message_good}}</span>
-    </div>
-    {% endif %}
 
     {% if message %}
     <div class="alert alert-danger">
@@ -17,15 +11,15 @@
     {% endif %}
 
     <section class="login-section">
-        <form action="{{url_for('users.olvidar_contraseña')}}" class="login-form" method="post">
+        <form action="" class="login-form" method="post">
             <div class="input-container">
-                <label for="email">Email</label>
-                <input type="email" placeholder="example@gmail.com" id="email" name="email">
+                <label for="code">Ingresa tu codigo de verificacion</label>
+                <input type="text" placeholder="052478" id="code" name="code">
             </div>
 
             <button class="btn btn-primary">Enviar</button>
             <div class="login-form__links">
-                <a href="{{url_for('users.index')}}">¿Regresar?</a>
+                <a href="{{url_for('users.log_out')}}">¿Regresar?</a>
             </div>
         </form>
     </section>
