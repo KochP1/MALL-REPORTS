@@ -20,9 +20,6 @@ def create_app():
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
     # Servidor de correo
-    mail = Mail()
-
-    app.config['mail'] = mail.init_app(app)
 
     app.config['MAIL_SERVER'] = getenv('MAIL_SERVER')
     app.config['MAIL_PORT'] = getenv('MAIL_PORT')
@@ -30,6 +27,11 @@ def create_app():
     app.config['MAIL_USERNAME'] = getenv('MAIL_USERNAME')
     app.config['MAIL_PASSWORD'] = getenv('MAIL_PASSWORD')
     app.config['MAIL_DEFAULT_SENDER'] = getenv('MAIL_DEFAULT_SENDER')
+    app.config['MAIL_USE_SSL'] = getenv('MAIL_USE_SSL')
+
+    mail = Mail()
+
+    app.config['mail'] = mail.init_app(app)
 
     app.secret_key = app.config['SECRET_KEY']
 

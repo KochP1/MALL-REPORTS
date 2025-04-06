@@ -283,17 +283,22 @@ def generar_codigo_verificacion(usuario_id):
         current_app.logger.error(f"Error al guardar código: {str(e)}")
         raise  # Relanza la excepción para manejo superior
 
-def enviar_codigo():
-    email = current_user.email
-    token = serializer.dumps(email, salt='reset-password')
-    codigo = generar_codigo_verificacion(current_user.id)
-    reset_url = url_for('recovery', token=token, _external=True)
-    msg = Message('Restablecer contraseña',
-                        sender='tu_correo_electronico',
-                        recipients=[email])
-    msg.body = f'Para restablecer tu contraseña, utiliza el siguiente codigo: {codigo}'
-    mail.send(msg)
-    return redirect(url_for('users.recover_2fa'))
+def enviar_codigo(email):
+    try:
+        msg = Message(
+            'Prueba de correo',  # Asunto
+            sender=current_app.config['MAIL_DEFAULT_SENDER'],
+            recipients=[email]
+        )
+        msg.body = 'Este es un correo de prueba'
+        
+        mail = current_app.config['mail']
+        mail.send(msg)
+        print("Correo enviado exitosamente!")
+        return redirect(url_for('users.recover_2fa'))
+    except Exception as e:
+        print(f"Error al enviar correo: {str(e)}")
+        return False
 
 @users.route('/olvidar_contraseña', methods = ['GET', 'POST'])
 def olvidar_contraseña():
@@ -303,18 +308,22 @@ def olvidar_contraseña():
     if request.method == 'POST':
         email = request.form['email']
         db = current_app.config['db']
-        try:
-            user = User.get_by_email(db, email)
-            if user != None:
-                return redirect(url_for('users.recover_2fa'))
-            return render_template("users/recuperar.html", message = 'El email no existe')
-        except Exception as e:
-            print(e)
+        user = User.get_by_email(db, email)
+        if user != None:
+                try:
+                    enviar_codigo(email)
+                except Exception as e:
+                    print(e)
+        return render_template("users/recuperar.html", message = 'El email no existe')
 
 @users.route('/recover_2fa', methods = ['GET', 'POST'])
 def recover_2fa():
     if request.method == 'GET':
         return render_template('users/2fa.html')
+    if request.method == 'POST':
+        #token = serializer.dumps(email, salt='reset-password')
+        #reset_url = url_for('recovery', token=token, _external=True)
+        return None
 
 @users.route('/log_out')
 def log_out():

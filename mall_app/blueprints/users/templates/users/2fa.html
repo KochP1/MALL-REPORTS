@@ -11,7 +11,7 @@
     {% endif %}
 
     <section class="login-section">
-        <form action="" class="login-form" method="post">
+        <form action="{{url_for('users.recover_2fa')}}" class="login-form" method="post">
             <div class="input-container">
                 <label for="code">Ingresa tu codigo de verificacion</label>
                 <input type="text" placeholder="052478" id="code" name="code">
