@@ -196,6 +196,40 @@ function change_estado(id) {
     })
 }
 
+// En tu archivo JavaScript principal
+function generarGraficaEstados() {
+    // Obtener datos de la tabla HTML
+    const estados = Array.from(
+        document.querySelectorAll('#tablaReportes td:nth-child(7)')
+    ).map(td => td.textContent.trim());
+    
+    const conteo = estados.reduce((acc, estado) => {
+        acc[estado] = (acc[estado] || 0) + 1;
+        return acc;
+    }, {});
+    
+    // Crear gráfica
+    new Chart(
+        document.getElementById('estadoChart'),
+        {
+            type: 'bar',
+            data: {
+                labels: Object.keys(conteo),
+                datasets: [{
+                    label: 'Reportes',
+                    data: Object.values(conteo),
+                    backgroundColor: Object.keys(conteo).map(
+                        (_, i) => `hsl(${i * 120}, 70%, 50%)`
+                    )
+                }]
+            }
+        }
+    );
+}
+
+// Ejecutar al cargar la página
+window.addEventListener('load', generarGraficaEstados);
+
 // FRONT END
 
 document.addEventListener("DOMContentLoaded", () => {
