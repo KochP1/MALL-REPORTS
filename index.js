@@ -1,19 +1,59 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron');
 const path = require('path');
-// Habilitar la carga de URL externas
-app.commandLine.appendSwitch('disable-web-security');
-app.commandLine.appendSwitch('ignore-certificate-errors');
+const { exec } = require('child_process');
 
-const createWindow =  () => {
-    const window = new BrowserWindow({
-        width: 1200,
-        height: 720
-    })
+let mainWindow;
 
-    window.setMenuBarVisibility(false); // Esto ocultará la barra de menu
-    window.loadURL('http://127.0.0.1:5000/')
+function createWindow() {
+    mainWindow = new BrowserWindow({
+        width: 800,
+        height: 600,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+        },
+    });
+
+    // Cargar la aplicación Flask
+    mainWindow.setMenuBarVisibility(false); // ocultar la barra de menú
+    mainWindow.loadURL('http://localhost:5000');
+
+    // Abrir las herramientas de desarrollo
+    // mainWindow.webContents.openDevTools();
+
+    // Manejar el cierre de la ventana
+    mainWindow.on('closed', () => {
+        mainWindow = null;
+    });
 }
 
-app.whenReady().then(() => {
-    createWindow()
-  })
+
+app.on('ready', () => {
+    // Ejecutar el servidor Flask
+    exec('python3 run.py', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error al iniciar Flask: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.error(`Error en Flask: ${stderr}`);
+            return;
+        }
+        console.log(`Flask iniciado: ${stdout}`);
+    });
+
+    createWindow();
+});
+
+// Salir cuando todas las ventanas estén cerradas
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
+});
+
+app.on('activate', () => {
+    if (mainWindow === null) {
+        createWindow();
+    }
+});
